@@ -153,11 +153,19 @@ function populateProductData(product) {
     "Wireless charging": "fas fa-charging-station",
     "Sürətli şarj": "fas fa-bolt",
     "15W sürətli şarj": "fas fa-bolt",
+    "15W maksimum güc": "fas fa-bolt",
+    "20W maksimum güc": "fas fa-bolt",
     "10000mAh tutum": "fas fa-battery-three-quarters",
     "USB-C və Lightning": "fas fa-plug",
     "LED göstərici": "fas fa-lightbulb",
     "Kompakt dizayn": "fas fa-mobile-alt",
     "Çoxlu cihaz dəstəyi": "fas fa-tablets",
+    "Universal uyğunluq": "fas fa-plug",
+    "Qorunma sistemi": "fas fa-shield-alt",
+    "İkili USB port": "fa-brands fa-usb",
+    "USB Type-C port": "fa-brands fa-usb",
+    "LED indikator": "fas fa-lightbulb",
+    "Orijinal dizayn": "fa-solid fa-star",
   };
 
   featuresGrid.innerHTML = product.features
@@ -394,6 +402,7 @@ function getCategoryName(category) {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
     "car-charger": "Avtomobil Şarjı",
+    charger: "Şarj Cihazı",
   };
   return categoryNames[category] || category;
 }

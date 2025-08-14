@@ -159,6 +159,45 @@ const PRODUCTS = {
       { number: "3", text: "Port" },
     ],
   },
+  "charger-20w": {
+    id: "charger-20w",
+    name: "Charger 20W",
+    category: "charger",
+    price: 24.99,
+    originalPrice: 34.99,
+    discount: 29,
+    images: {
+      main: "image/material/earphone/charger-20w.jpg",
+      gallery: [
+        "image/material/earphone/charger-20w.jpg",
+        "image/material/earphone/charger-20w-back.jpg",
+        "image/material/earphone/charger-20w-cable.jpg",
+      ],
+    },
+    description: "Səyahət zamanı etibarlı enerji həlli Charger 20W",
+    features: [
+      "20W maksimum güc",
+      "USB Type-C port",
+      "Universal uyğunluq",
+      "Orijinal dizayn",
+      "Qorunma sistemi",
+      "Kompakt dizayn",
+    ],
+    specs: {
+      "Max Güc": "20W",
+      Giriş: "12V-24V DC",
+      Çıxış: "5V/3A, 9V/2A, 12V/1.25A",
+      "Port Sayı": "1 USB-C",
+      Protokollar: "QC3.0, PD",
+      Çəki: "45g",
+      Ölçülər: "65 x 32 x 32mm",
+    },
+    highlights: [
+      { number: "20W", text: "Max Güc" },
+      { number: "1", text: "USB-C Port" },
+      { number: "12-24V", text: "Uyğunluq" },
+    ],
+  },
   "car-charger-15w": {
     id: "car-charger-15w",
     name: "Car Charger 15W",
@@ -272,6 +311,7 @@ function getCategoryName(category) {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
     "car-charger": "Avtomobil Şarjı",
+    charger: "Şarj Cihazı",
   };
   return categoryNames[category] || category;
 }
