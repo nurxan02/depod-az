@@ -72,23 +72,7 @@ function populateProductData(product) {
   // Populate product name
   document.getElementById("productName").textContent = product.name;
 
-  // Populate pricing
-  document.getElementById("currentPrice").textContent = `$${product.price}`;
-  const originalPriceEl = document.getElementById("originalPrice");
-  if (product.originalPrice) {
-    originalPriceEl.textContent = `$${product.originalPrice}`;
-    originalPriceEl.style.display = "inline";
-  }
-
-  // Show discount badge
-  const discountBadge = document.getElementById("discountBadge");
-  if (product.discount > 0) {
-    discountBadge.innerHTML = `
-            <span class="discount-percentage">${product.discount}%</span>
-            <span class="discount-text">OFF</span>
-        `;
-    discountBadge.style.display = "block";
-  }
+  // ...existing code...
 
   // Populate main image
   const mainImage = document.getElementById("mainProductImage");
@@ -223,14 +207,8 @@ function loadRelatedProducts(category, currentProductId) {
             </div>
             <div class="related-product-info">
                 <h3 class="related-product-name">${product.name}</h3>
-                <div class="related-product-price">
-                    <span class="related-current-price">$${product.price}</span>
-                    ${
-                      product.originalPrice
-                        ? `<span class="related-original-price">$${product.originalPrice}</span>`
-                        : ""
-                    }
-                </div>
+                <p class="product-description-short">${product.description}</p>
+                
                 <a href="product-detail.html?id=${
                   product.id
                 }" class="related-product-link">
@@ -297,13 +275,9 @@ function loadRelatedProducts(category, currentProductId) {
             </div>
             <div class="related-product-info">
                 <h4 class="related-product-name">${product.name}</h4>
+                <p class="product-description-short">${product.description}</p>
                 <div class="related-product-price">
-                    <span class="related-current-price">$${product.price}</span>
-                    ${
-                      product.originalPrice
-                        ? `<span class="related-original-price">$${product.originalPrice}</span>`
-                        : ""
-                    }
+
                 </div>
                 <a href="product-detail.html?id=${
                   product.id

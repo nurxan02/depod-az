@@ -4,7 +4,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
@@ -80,7 +79,7 @@ body {
 
 .nav-link {
   text-decoration: none;
-  color: #333;
+  color: #6d6d6d;
   font-weight: 500;
   font-size: 16px;
   transition: all 0.3s ease;
@@ -89,7 +88,8 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-  color: #2563eb;
+  color: #1d4ed8;
+  font-weight: bolder;
 }
 
 .nav-link.active::after {
@@ -99,7 +99,7 @@ body {
   left: 0;
   width: 100%;
   height: 2px;
-  background: #2563eb;
+  background: #1d4ed8;
 }
 
 /* Mobile Navigation */
@@ -121,10 +121,12 @@ body {
 /* Hero Section */
 .hero {
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   min-height: 90vh;
   display: flex;
   align-items: center;
+  position: relative;
+  background: linear-gradient(120deg, #ffffff 0%, #605c395e 100%);
+  overflow: hidden;
 }
 
 .hero-container {
@@ -140,7 +142,7 @@ body {
 .hero-title {
   font-size: 3.5rem;
   font-weight: 700;
-  color: #000;
+  color: #3d3d3d;
   line-height: 1.2;
   margin-bottom: 24px;
   letter-spacing: -0.02em;
@@ -173,13 +175,18 @@ body {
   background: #000;
   color: white;
 }
+.btn-hero-primary {
+  background-color: #1d4ed8;
+}
 
 .btn-primary:hover {
   background: #333;
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
-
+.btn-hero-primary:hover {
+  background-color: #3368fa;
+}
 .btn-secondary {
   background: transparent;
   color: #000;
@@ -201,7 +208,7 @@ body {
 .hero-product {
   max-width: 100%;
   height: auto;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.288));
 }
 
 /* Products Section */
@@ -514,7 +521,12 @@ body {
     text-align: center;
   }
 }
-
+@media (max-width: 600px) {
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 40px;
+  }
+}
 @media (max-width: 480px) {
   .container {
     padding: 0 15px;
@@ -967,7 +979,7 @@ html {
 /* About Page Styles */
 .about-hero {
   padding: 120px 0 60px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #babec3 100%);
 }
 
 .about-title {
@@ -1259,7 +1271,7 @@ html {
 /* Contact Page Styles */
 .contact-hero {
   padding: 120px 0 60px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #babec3 100%);
 }
 
 .contact-title {
@@ -1845,7 +1857,7 @@ html {
 /* Products Listing Page Styles */
 .products-header {
   padding: 120px 0 60px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #babec3 100%);
 }
 
 .products-title {
@@ -2672,7 +2684,7 @@ html {
 
 .category-card {
   position: relative;
-  border-radius: 24px;
+  border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.3s;
@@ -2693,17 +2705,17 @@ html {
 .category-card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(37, 99, 235, 0.85);
+  background: rgba(0, 0, 0, 0.516);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
+  opacity: 1;
+  transition: 0.3s;
 }
 
 .category-card:hover .category-card-overlay {
-  opacity: 1;
+  box-shadow: inset 0 0 100px 10px rgba(255, 255, 255, 0.348);
 }
 
 .category-card:hover .category-card-img {

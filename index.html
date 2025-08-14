@@ -91,21 +91,28 @@
     <section class="hero">
       <div class="hero-container">
         <div class="hero-content">
-          <h1 class="hero-title">Keyfiyyətli Texnologiya Məhsulları</h1>
+          <h1 class="hero-title" id="typewriter-title"></h1>
           <p class="hero-subtitle">
             Depod brendinin yenilikçi və etibarlı texnologiya həlləri ilə tanış
-            olun
+            olun. Depod'lu olmaq bir seçim deyil, bir üstünlükdür...
           </p>
           <div class="hero-buttons">
-            <a href="#products" class="btn btn-primary">Məhsulları Kəşf Et</a>
+            <a href="#products" class="btn btn-primary btn-hero-primary"
+              >Məhsulları Kəşf Et</a
+            >
             <a href="about.html" class="btn btn-secondary">Haqqımızda</a>
           </div>
         </div>
         <div class="hero-image">
           <img
+            id="hero-slider-img"
             src="image/material/earphone/png/peak-black.png"
             alt="Depod Peak Qulaqlıq"
             class="hero-product"
+            style="
+              transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.7s;
+            "
           />
         </div>
       </div>
@@ -241,11 +248,23 @@
               </p>
             </div>
           </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Müştəri Məmnuniyyəti</h3>
+              <p class="feature-description">
+                Müştəri məmnuniyyəti bizim əsas prioritetimizdir
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
+
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
@@ -293,12 +312,20 @@
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2025 Depod. Bütün hüquqlar qorunur.</p>
+          <p>
+            &copy; 2025 Depod. Bütün hüquqlar qorunur. Developed by
+            <a
+              style="color: azure; text-decoration: none"
+              href="https://nurkhanmasimzada.site"
+              >Masimzada</a
+            >
+          </p>
         </div>
       </div>
     </footer>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
   </body>
 </html>

@@ -4,9 +4,9 @@ const PRODUCTS = {
     id: "peak-black",
     name: "Peak Black",
     category: "earphone",
-    price: 89.99,
-    originalPrice: 119.99,
-    discount: 25,
+    // price: 89.99,
+    // originalPrice: 119.99,
+    // discount: 25,
     images: {
       main: "image/material/earphone/png/peak-black.png",
       gallery: [
@@ -44,9 +44,9 @@ const PRODUCTS = {
     id: "peak-beige",
     name: "Peak Beige",
     category: "earphone",
-    price: 94.99,
-    originalPrice: 129.99,
-    discount: 27,
+    // price: 94.99,
+    // originalPrice: 129.99,
+    // discount: 27,
     images: {
       main: "image/material/earphone/png/peak-beige.png",
       gallery: [
@@ -84,9 +84,9 @@ const PRODUCTS = {
     id: "tws-001-white",
     name: "TWS-001 White",
     category: "earphone",
-    price: 69.99,
-    originalPrice: 89.99,
-    discount: 22,
+    // price: 69.99,
+    // originalPrice: 89.99,
+    // discount: 22,
     images: {
       main: "image/material/earphone/TWS-001-white.jpg",
       gallery: [
@@ -124,9 +124,9 @@ const PRODUCTS = {
     id: "powerpack-15w",
     name: "PowerPack 15W",
     category: "powerbank",
-    price: 49.99,
-    originalPrice: 69.99,
-    discount: 29,
+    // price: 49.99,
+    // originalPrice: 69.99,
+    // discount: 29,
     images: {
       main: "image/material/earphone/powerpack-15w-white-perspective.jpg",
       gallery: [
@@ -163,9 +163,9 @@ const PRODUCTS = {
     id: "charger-20w",
     name: "Charger 20W",
     category: "charger",
-    price: 24.99,
-    originalPrice: 34.99,
-    discount: 29,
+    // price: 24.99,
+    // originalPrice: 34.99,
+    // discount: 29,
     images: {
       main: "image/material/earphone/charger-20w.jpg",
       gallery: [
@@ -202,9 +202,9 @@ const PRODUCTS = {
     id: "car-charger-15w",
     name: "Car Charger 15W",
     category: "car-charger",
-    price: 24.99,
-    originalPrice: 34.99,
-    discount: 29,
+    // price: 24.99,
+    // originalPrice: 34.99,
+    // discount: 29,
     images: {
       main: "image/material/earphone/car-15w.jpg",
       gallery: [
@@ -287,12 +287,7 @@ function renderProducts(products) {
                 <h3 class="product-name-modern">${product.name}</h3>
                 <p class="product-description-short">${product.description}</p>
                 <div class="product-price-container">
-                    <span class="current-price">$${product.price}</span>
-                    ${
-                      product.originalPrice
-                        ? `<span class="original-price">$${product.originalPrice}</span>`
-                        : ""
-                    }
+
                 </div>
                 <a href="product-detail.html?id=${
                   product.id
