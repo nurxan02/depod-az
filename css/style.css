@@ -613,7 +613,7 @@ html {
 }
 
 .breadcrumb {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   font-size: 14px;
 }
 
@@ -2202,8 +2202,8 @@ html {
 }
 
 .thumbnail {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 8px;
   border: 2px solid #e5e5e5;
@@ -2798,6 +2798,17 @@ html {
     padding: 20px;
   }
   .product-highlights-container {
+    display: flex;
+    justify-content: center;
+  }
+  .breadcrumb {
+    font-size: 11px;
+    margin-bottom: 0;
+  }
+  .breadcrumb span {
+    margin: 0px 5px;
+  }
+  .breadcrumb-section .container {
     display: flex;
     justify-content: center;
   }
