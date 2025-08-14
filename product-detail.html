@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="pageTitle">Məhsul Detalları - Depod</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Depod məhsul detalları və texniki xüsusiyyətlər"
+    />
+    <meta name="keywords" content="depod məhsul, texniki xüsusiyyətlər" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="favicon/favicon-96x96.png"
+    />
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <img src="image/logo.png" alt="Depod Logo" class="logo-icon" />
+          <span class="logo-text">DEPOD</span>
+        </a>
+
+        <div class="nav-menu" id="nav-menu">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link">Ana Səhifə</a>
+            </li>
+            <li class="nav-item">
+              <a href="products.html" class="nav-link active">Məhsullar</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">Haqqımızda</a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">Əlaqə</a>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Product Detail Container -->
+    <div class="product-detail-container">
+      <!-- Breadcrumb -->
+      <section class="breadcrumb-section">
+        <div class="container">
+          <div class="breadcrumb" id="breadcrumb">
+            <!-- Breadcrumb will be populated dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Product Section -->
+      <section class="product-main">
+        <div class="container">
+          <div class="product-layout">
+            <!-- Product Images -->
+            <div class="product-images-section">
+              <div
+                class="discount-badge-large"
+                id="discountBadge"
+                style="display: none"
+              >
+                <span class="discount-text">OFF</span>
+              </div>
+
+              <div class="main-product-image">
+                <img id="mainProductImage" src="" alt="" class="main-image" />
+              </div>
+
+              <div class="product-thumbnails" id="productThumbnails">
+                <!-- Thumbnails will be populated dynamically -->
+              </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info-section">
+              <div class="product-header">
+                <h1 id="productName" class="product-title-large"></h1>
+              </div>
+
+              <div class="product-pricing">
+                <div class="price-container">
+                  <span id="currentPrice" class="price-current"></span>
+                  <span
+                    id="originalPrice"
+                    class="price-original"
+                    style="display: none"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="product-highlights-container" id="productHighlights">
+                <!-- Highlights will be populated dynamically -->
+              </div>
+
+              <div class="product-description-section">
+                <h3>Məhsul Haqqında</h3>
+                <p id="productDescription"></p>
+              </div>
+
+              <div class="product-features-section">
+                <h3>Əsas Xüsusiyyətlər</h3>
+                <ul id="productFeatures" class="features-list">
+                  <!-- Features will be populated dynamically -->
+                </ul>
+              </div>
+
+              <div class="product-quantity-section">
+                <label>Miqdar</label>
+                <div class="quantity-controls">
+                  <button class="quantity-btn" onclick="decreaseQuantity()">
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1"
+                    max="10"
+                  />
+                  <button class="quantity-btn" onclick="increaseQuantity()">
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-actions">
+                <button class="btn-add-to-cart" onclick="addToCart()">
+                  Səbətə Əlavə Et
+                </button>
+                <button class="btn-buy-now" onclick="buyNow()">İndi Al</button>
+              </div>
+
+              <div class="product-guarantee">
+                <div class="guarantee-item">
+                  <span class="guarantee-icon"><i class="fas fa-shield-alt"></i></span>
+                  <span>1 il zəmanət</span>
+                </div>
+                <div class="guarantee-item">
+                  <span class="guarantee-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                  <span>Pulsuz çatdırılma</span>
+                </div>
+                <div class="guarantee-item">
+                  <span class="guarantee-icon"><i class="fa-solid fa-arrow-rotate-left"></i></i></span>
+                  <span>14 gün geri qaytarma</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Tabs -->
+      <section class="product-tabs-section">
+        <div class="container">
+          <div class="tabs-header">
+            <button class="tab-btn active" data-tab="overview">
+              Ümumi Baxış
+            </button>
+            <button class="tab-btn" data-tab="specs">
+              Texniki Xüsusiyyətlər
+            </button>
+          </div>
+
+          <div class="tabs-content">
+            <!-- Overview Tab -->
+            <div class="tab-panel active" id="overview">
+              <div class="overview-content">
+                <h3>Məhsul Haqqında Ətraflı</h3>
+                <p id="detailedDescription"></p>
+
+                <div class="features-grid" id="featuresGrid">
+                  <!-- Features grid will be populated dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Specs Tab -->
+            <div class="tab-panel" id="specs">
+              <div class="specs-content">
+                <h3>Texniki Xüsusiyyətlər</h3>
+                <div class="specs-table" id="specsTable">
+                  <!-- Specs will be populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+                </div>
+        </div>
+      </section>
+
+      <!-- Related Products -->
+      <section class="related-products">
+        <div class="container">
+          <h2 class="section-title">Oxşar Məhsullar</h2>
+          <div class="related-products-grid" id="relatedProducts">
+            <!-- Related products will be populated dynamically -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="image/logo.png"
+                alt="Depod Logo"
+                class="footer-logo-icon"
+              />
+              <span class="footer-logo-text">DEPOD</span>
+            </div>
+            <p class="footer-description">
+              Keyfiyyətli texnoloji məhsullar istehsalçısı. Yenilikçi həllər və
+              etibarlı məhsullarla sizin xidmətinizdəyik.
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Məhsullar</h4>
+            <ul class="footer-links">
+              <li><a href="products.html?category=powerbank">Powerbank</a></li>
+              <li><a href="products.html?category=earphone">Qulaqlıqlar</a></li>
+              <li>
+                <a href="products.html?category=car-charger">Avtomobil Şarjı</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Şirkət</h4>
+            <ul class="footer-links">
+              <li><a href="about.html">Haqqımızda</a></li>
+              <li><a href="contact.html">Əlaqə</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Əlaqə</h4>
+            <div class="footer-contact">
+              <p>info@depod.az</p>
+              <p>+994 XX XXX XX XX</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Depod. Bütün hüquqlar qorunur.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/product-detail.js"></script>
+  </body>
+</html>

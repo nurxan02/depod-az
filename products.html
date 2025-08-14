@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Məhsullar - Depod</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Depod məhsulları - Powerbank, qulaqlıq və avtomobil şarj cihazları"
+    />
+    <meta
+      name="keywords"
+      content="depod məhsulları, powerbank, qulaqlıq, avtomobil şarj"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="favicon/favicon-96x96.png"
+    />
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <img src="image/logo.png" alt="Depod Logo" class="logo-icon" />
+          <span class="logo-text">DEPOD</span>
+        </a>
+
+        <div class="nav-menu" id="nav-menu">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link">Ana Səhifə</a>
+            </li>
+            <li class="nav-item">
+              <a href="products.html" class="nav-link active">Məhsullar</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">Haqqımızda</a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">Əlaqə</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Products Header -->
+    <section class="products-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Ana Səhifə</a>
+          <span>/</span>
+          <span class="active">Məhsullar</span>
+        </div>
+        <h1 class="products-title">Məhsullarımız</h1>
+        <p class="products-subtitle">Keyfiyyətli texnoloji həllər</p>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-category="all">Hamısı</button>
+          <button class="filter-btn" data-category="earphone">
+            Qulaqlıqlar
+          </button>
+          <button class="filter-btn" data-category="powerbank">
+            Powerbank
+          </button>
+          <button class="filter-btn" data-category="car-charger">
+            Avtomobil Şarjı
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-listing">
+      <div class="container">
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be loaded dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="image/logo.png"
+                alt="Depod Logo"
+                class="footer-logo-icon"
+              />
+              <span class="footer-logo-text">DEPOD</span>
+            </div>
+            <p class="footer-description">
+              Keyfiyyətli texnoloji məhsullar istehsalçısı. Yenilikçi həllər və
+              etibarlı məhsullarla sizin xidmətinizdəyik.
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Məhsullar</h4>
+            <ul class="footer-links">
+              <li><a href="products.html?category=powerbank">Powerbank</a></li>
+              <li><a href="products.html?category=earphone">Qulaqlıqlar</a></li>
+              <li>
+                <a href="products.html?category=car-charger">Avtomobil Şarjı</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Şirkət</h4>
+            <ul class="footer-links">
+              <li><a href="about.html">Haqqımızda</a></li>
+              <li><a href="contact.html">Əlaqə</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Əlaqə</h4>
+            <div class="footer-contact">
+              <p>info@depod.az</p>
+              <p>+994 XX XXX XX XX</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Depod. Bütün hüquqlar qorunur.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+  </body>
+</html>
