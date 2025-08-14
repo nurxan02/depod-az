@@ -604,10 +604,10 @@ html {
 }
 
 /* Focus States */
-.nav-link:focus,
+
 .btn:focus,
 .product-link:focus {
-  /* outline: 2px solid #2563eb; */
+  outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
 
