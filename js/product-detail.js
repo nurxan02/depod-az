@@ -274,7 +274,9 @@ function loadRelatedProducts(category, currentProductId) {
                 }
             </div>
             <div class="related-product-info">
-                <h4 class="related-product-name">${product.name}</h4>
+                <h5>Depod</h5><h1 class="related-product-name">${
+                  product.name
+                }</h1>
                 <p class="product-description-short">${product.description}</p>
                 <div class="related-product-price">
 

@@ -284,7 +284,9 @@ function renderProducts(products) {
                 <div class="product-category">${getCategoryName(
                   product.category
                 )}</div>
-                <h3 class="product-name-modern">${product.name}</h3>
+                 <h5>Depod</h5><h3 class="product-name-modern">${
+                   product.name
+                 }</h3>
                 <p class="product-description-short">${product.description}</p>
                 <div class="product-price-container">
 
