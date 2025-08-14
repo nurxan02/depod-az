@@ -1147,12 +1147,11 @@ html {
 }
 
 .team-description {
-  text-align: center;
+  text-align: start;
   color: #666;
   line-height: 1.6;
   margin-bottom: 60px;
   max-width: 600px;
-  margin-left: auto;
   margin-right: auto;
 }
 
