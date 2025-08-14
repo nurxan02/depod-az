@@ -127,6 +127,7 @@ function populateProductData(product) {
   const featureIcons = {
     "24 saat batareya ömrü": "fas fa-battery-full",
     "28 saat batareya ömrü": "fas fa-battery-full",
+    "20 saat batareya ömrü": "fas fa-battery-full",
     "Bluetooth 5.0 texnologiyası": "fab fa-bluetooth-b",
     "IPX4 su davamlılığı": "fas fa-tint",
     "IPX5 su davamlılığı": "fas fa-tint",
