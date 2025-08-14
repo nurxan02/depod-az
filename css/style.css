@@ -23,11 +23,21 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  z-index: 1000;
+  transition: background 0.3s, box-shadow 0.3s, border-bottom 0.3s;
+  display: flex;
+  justify-content: space-between;
+  min-height: 70px;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.754);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #e5e5e5;
-  z-index: 1000;
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
 .nav-container {
@@ -38,6 +48,7 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 70px;
+  width: 100%;
 }
 
 .nav-logo {
@@ -596,7 +607,7 @@ html {
 .nav-link:focus,
 .btn:focus,
 .product-link:focus {
-  outline: 2px solid #2563eb;
+  /* outline: 2px solid #2563eb; */
   outline-offset: 2px;
 }
 
