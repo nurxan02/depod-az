@@ -188,6 +188,9 @@ body {
 }
 .btn-hero-primary {
   background-color: #1d4ed8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-primary:hover {
@@ -2807,6 +2810,28 @@ html {
   background: #2563eb;
   color: #fff;
 }
+
+@media (max-width: 900px) {
+  .product-highlights-container {
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 860px) {
+  .btn-hero-primary {
+    font-size: 13px;
+  }
+}
+@media (max-width: 803px) {
+  .btn-hero-primary {
+    font-size: 12px;
+  }
+}
+@media (max-width: 786px) {
+  .btn-hero-primary {
+    font-size: 11px;
+  }
+}
 @media (max-width: 768px) {
   .tab-panel {
     padding: 20px;
@@ -2826,10 +2851,8 @@ html {
     display: flex;
     justify-content: center;
   }
-}
-@media (max-width: 900px) {
-  .product-highlights-container {
-    display: flex;
-    justify-content: center;
+
+  .btn-hero-primary {
+    font-size: 16px;
   }
 }
