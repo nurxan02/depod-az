@@ -36,7 +36,7 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "24h", text: "Batareya" },
-      { number: "IPX4", text: "Su Davamlı" },
+      { number: "IPX4", text: "Suya Davamlı" },
       { number: "5.0", text: "Bluetooth" },
     ],
   },
@@ -76,8 +76,8 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "28h", text: "Batareya" },
-      { number: "IPX5", text: "Su Davamlı" },
-      { number: "ANC", text: "Noise Cancel" },
+      { number: "IPX5", text: "Suya Davamlı" },
+      { number: "ANC", text: "Noise Cancelation" },
     ],
   },
   "tws-001-white": {
@@ -116,7 +116,7 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "20h", text: "Batareya" },
-      { number: "IPX4", text: "Su Davamlı" },
+      { number: "IPX4", text: "Suya Davamlı" },
       { number: "48g", text: "Yüngül" },
     ],
   },
