@@ -125,9 +125,9 @@ function populateProductData(product) {
 
   // Define feature icons mapping
   const featureIcons = {
-    "24 saat batareya ömrü": "fas fa-battery-full",
-    "28 saat batareya ömrü": "fas fa-battery-full",
-    "20 saat batareya ömrü": "fas fa-battery-full",
+    "24 saat batareya ömrü": "fa-solid fa-battery-full",
+    "28 saat batareya ömrü": "fa-solid fa-battery-full",
+    "20 saat batareya ömrü": "fa-solid fa-battery-full",
     "Bluetooth 5.0 texnologiyası": "fab fa-bluetooth-b",
     "IPX4 su davamlılığı": "fas fa-tint",
     "IPX5 su davamlılığı": "fas fa-tint",
@@ -143,14 +143,19 @@ function populateProductData(product) {
     "10000mAh tutum": "fas fa-battery-three-quarters",
     "USB-C və Lightning": "fas fa-plug",
     "LED göstərici": "fas fa-lightbulb",
+    "LED ekran": "fas fa-lightbulb",
     "Kompakt dizayn": "fas fa-mobile-alt",
     "Çoxlu cihaz dəstəyi": "fas fa-tablets",
     "Universal uyğunluq": "fas fa-plug",
     "Qorunma sistemi": "fas fa-shield-alt",
+    "Təhlükəsizlik sistemi": "fas fa-shield-alt",
     "İkili USB port": "fa-brands fa-usb",
+    "Çoxlu port dəstəyi": "fa-brands fa-usb",
     "USB Type-C port": "fa-brands fa-usb",
     "LED indikator": "fas fa-lightbulb",
     "Orijinal dizayn": "fa-solid fa-star",
+    "Auto pairing": "fa-solid fa-link",
+    "Ergonomik dizayn": "fa-solid fa-heart",
   };
 
   featuresGrid.innerHTML = product.features
