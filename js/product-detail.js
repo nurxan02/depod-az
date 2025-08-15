@@ -1,22 +1,100 @@
+// Localhost API base logging
+(function () {
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    console.log("API base is", localStorage.getItem("API_BASE"));
+  }
+})();
+
 // Product Detail Page JavaScript
 
 // Import products data from products.js
-function getProductById(productId) {
+async function getProductById(productId) {
   if (typeof PRODUCTS === "undefined") {
     console.error(
       "PRODUCTS is not defined. Make sure products.js is loaded first."
     );
     return null;
   }
+  try {
+    if (window.API) {
+      // reuse map from products.js by calling global function if present
+      if (typeof window.getProductById === "function") {
+        // avoid recursion; call API directly instead
+        const p = await window.API.getProduct(productId);
+        // inline a small mapper (duplicated minimal) to avoid circular import
+        return {
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          images: {
+            main:
+              p.main_image ||
+              (p.images && p.images.find((i) => i.is_main)?.image) ||
+              "",
+            gallery: Array.isArray(p.images)
+              ? p.images.map((i) => i.image)
+              : [],
+          },
+          description: p.description || "",
+          features: Array.isArray(p.features)
+            ? p.features.map((f) => f.text)
+            : [],
+          specs: Array.isArray(p.specs)
+            ? p.specs.reduce((acc, s) => {
+                acc[s.label] = s.value;
+                return acc;
+              }, {})
+            : {},
+          highlights: Array.isArray(p.highlights)
+            ? p.highlights.map((h) => ({ number: h.number, text: h.text }))
+            : [],
+        };
+      }
+    }
+  } catch (e) {
+    console.warn("API getProduct failed, using local data:", e.message);
+  }
   return PRODUCTS[productId] || null;
 }
 
-function getAllProducts() {
+async function getAllProducts() {
   if (typeof PRODUCTS === "undefined") {
     console.error(
       "PRODUCTS is not defined. Make sure products.js is loaded first."
     );
     return [];
+  }
+  try {
+    if (window.API) {
+      const list = await window.API.listProducts();
+      return list.map((p) => ({
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        images: {
+          main:
+            p.main_image ||
+            (p.images && p.images.find((i) => i.is_main)?.image) ||
+            "",
+          gallery: Array.isArray(p.images) ? p.images.map((i) => i.image) : [],
+        },
+        description: p.description || "",
+        features: Array.isArray(p.features)
+          ? p.features.map((f) => f.text)
+          : [],
+        specs: Array.isArray(p.specs)
+          ? p.specs.reduce((acc, s) => {
+              acc[s.label] = s.value;
+              return acc;
+            }, {})
+          : {},
+        highlights: Array.isArray(p.highlights)
+          ? p.highlights.map((h) => ({ number: h.number, text: h.text }))
+          : [],
+      }));
+    }
+  } catch (e) {
+    console.warn("API listProducts failed, using local data:", e.message);
   }
   return Object.values(PRODUCTS);
 }
@@ -27,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function initProductDetailPage() {
+async function initProductDetailPage() {
   // Get product ID from URL
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get("id");
@@ -38,7 +116,7 @@ function initProductDetailPage() {
   }
 
   // Get product data
-  const product = getProductById(productId);
+  const product = await getProductById(productId);
   if (!product) {
     window.location.href = "products.html";
     return;
@@ -58,13 +136,37 @@ function populateProductData(product) {
 
   // Populate breadcrumb
   const breadcrumb = document.getElementById("breadcrumb");
-  const categoryName = getCategoryName(product.category);
+  const categoryName = (function () {
+    if (typeof getCategoryName === "function") {
+      return getCategoryName(product.category);
+    }
+    // minimal inline fallback using global map or plain text
+    if (
+      product &&
+      typeof product.category === "object" &&
+      product.category.name
+    ) {
+      return product.category.name;
+    }
+    if (window.CATEGORY_NAME_MAP && typeof product.category === "string") {
+      return window.CATEGORY_NAME_MAP[product.category] || product.category;
+    }
+    return typeof product.category === "string"
+      ? product.category
+      : product.category?.key || "Kategoriya";
+  })();
+  const categoryKeyForLink = (function () {
+    const c = product.category;
+    if (c && typeof c === "object") return c.key || c.id || "";
+    return c || "";
+  })();
+
   breadcrumb.innerHTML = `
         <a href="index.html">Ana Səhifə</a>
         <span>/</span>
         <a href="products.html">Məhsullar</a>
         <span>/</span>
-        <a href="products.html?category=${product.category}">${categoryName}</a>
+        <a href="products.html?category=${categoryKeyForLink}">${categoryName}</a>
         <span>/</span>
         <span class="active">${product.name}</span>
     `;
@@ -184,42 +286,60 @@ function populateProductData(product) {
     .join("");
 
   // Load related products
-  loadRelatedProducts(product.category, product.id);
+  loadRelatedProducts(
+    typeof product.category === "object"
+      ? product.category.key || product.category.id
+      : product.category,
+    product.id
+  );
 }
 
-function loadRelatedProducts(category, currentProductId) {
+async function loadRelatedProducts(category, currentProductId) {
   const relatedProductsGrid = document.getElementById("relatedProducts");
   if (!relatedProductsGrid) return;
 
-  // Get all products and filter by category
-  const allProducts = getAllProducts();
-  const relatedProducts = allProducts
-    .filter((p) => p.category === category && p.id !== currentProductId)
-    .slice(0, 4); // Show max 4 related products
+  // Prefer category-scoped fetch; fallback to all products
+  let list = [];
+  try {
+    if (typeof getProductsByCategory === "function") {
+      list = await getProductsByCategory(category);
+    } else {
+      list = await getAllProducts();
+    }
+  } catch (e) {
+    list = await getAllProducts();
+  }
+
+  const catKey =
+    typeof category === "object" ? category.key || category.id : category;
+  const relatedProducts = list
+    .filter(
+      (p) =>
+        (typeof p.category === "object"
+          ? p.category.key || p.category.id
+          : p.category) === catKey && p.id !== currentProductId
+    )
+    .slice(0, 4);
 
   relatedProductsGrid.innerHTML = relatedProducts
     .map(
       (product) => `
         <div class="related-product-card">
-            ${
-              product.discount
-                ? `<div class="small-discount-badge">-${product.discount}%</div>`
-                : ""
-            }
+           
             <div class="related-product-image">
                 <img src="${product.images.main}" alt="${
         product.name
       }" loading="lazy">
             </div>
             <div class="related-product-info">
+                            <div class="product-category">${getCategoryName(
+                              product.category
+                            )}</div>
                 <h3 class="related-product-name">${product.name}</h3>
                 <p class="product-description-short">${product.description}</p>
-                
                 <a href="product-detail.html?id=${
                   product.id
-                }" class="related-product-link">
-                    Ətraflı Bax
-                </a>
+                }" class="related-product-link">Ətraflı Bax</a>
             </div>
         </div>
     `
@@ -261,41 +381,7 @@ function changeMainImage(imageSrc, thumbnailElement) {
   thumbnailElement.classList.add("active");
 }
 
-function loadRelatedProducts(category, currentProductId) {
-  const relatedProducts = getProductsByCategory(category)
-    .filter((product) => product.id !== currentProductId)
-    .slice(0, 3); // Show max 3 related products
-
-  const relatedContainer = document.getElementById("relatedProducts");
-  relatedContainer.innerHTML = relatedProducts
-    .map(
-      (product) => `
-        <div class="related-product-card">
-            <div class="related-product-image">
-                <img src="${product.images.main}" alt="${product.name}">
-                ${
-                  product.discount > 0
-                    ? `<div class="small-discount-badge">${product.discount}% OFF</div>`
-                    : ""
-                }
-            </div>
-            <div class="related-product-info">
-                <h5>Depod</h5><h1 class="related-product-name">${
-                  product.name
-                }</h1>
-                <p class="product-description-short">${product.description}</p>
-                <div class="related-product-price">
-
-                </div>
-                <a href="product-detail.html?id=${
-                  product.id
-                }" class="related-product-link">Bax</a>
-            </div>
-        </div>
-    `
-    )
-    .join("");
-}
+// (Removed duplicate loadRelatedProducts definition)
 
 // Quantity controls
 function increaseQuantity() {
@@ -383,7 +469,7 @@ function getCategoryName(category) {
   const categoryNames = {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
-    "car-charger": "Avtomobil Şarjı",
+    "car-charger": "Avtomobil Aksesuarları",
     charger: "Şarj Cihazı",
   };
   return categoryNames[category] || category;

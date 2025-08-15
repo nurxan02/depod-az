@@ -305,7 +305,7 @@ function getCategoryName(category) {
   const categoryNames = {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
-    "car-charger": "Avtomobil Şarjı",
+    "car-charger": "Avtomobil Aksesuarları",
   };
   return categoryNames[category] || category;
 }

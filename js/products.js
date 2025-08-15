@@ -1,4 +1,27 @@
-// Product Database
+// Localhost API base logging
+(function () {
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    console.log("API base is", localStorage.getItem("API_BASE"));
+  }
+})();
+
+// Global category name map (key -> display name), filled from API when available
+window.CATEGORY_NAME_MAP = window.CATEGORY_NAME_MAP || null;
+
+// Prefetch categories early to ensure name lookups work on all pages
+(async function prefetchCategoriesForNames() {
+  if (!window.API) return;
+  try {
+    const cats = await window.API.listCategories();
+    window.CATEGORY_NAME_MAP = Object.fromEntries(
+      cats.map((c) => [c.key, c.name])
+    );
+  } catch (e) {
+    // ignore; will fallback to static map below
+  }
+})();
+
+// Product Database (local fallback)
 const PRODUCTS = {
   "peak-black": {
     id: "peak-black",
@@ -238,22 +261,65 @@ const PRODUCTS = {
   },
 };
 
-// Get all products
-function getAllProducts() {
-  return Object.values(PRODUCTS);
+// Map API product to frontend shape
+function mapApiProduct(p) {
+  return {
+    id: p.id,
+    name: p.name,
+    category: p.category,
+    images: {
+      main:
+        p.main_image ||
+        (p.images && p.images.find((i) => i.is_main)?.image) ||
+        "",
+      gallery: Array.isArray(p.images) ? p.images.map((i) => i.image) : [],
+    },
+    description: p.description || "",
+    features: Array.isArray(p.features) ? p.features.map((f) => f.text) : [],
+    specs: Array.isArray(p.specs)
+      ? p.specs.reduce((acc, s) => {
+          acc[s.label] = s.value;
+          return acc;
+        }, {})
+      : {},
+    highlights: Array.isArray(p.highlights)
+      ? p.highlights.map((h) => ({ number: h.number, text: h.text }))
+      : [],
+  };
+}
+
+// Get all products (prefers API)
+async function getAllProducts() {
+  try {
+    const list = await window.API.listProducts();
+    return list.map(mapApiProduct);
+  } catch (e) {
+    console.warn("API listProducts failed, using local data:", e.message);
+    return Object.values(PRODUCTS);
+  }
 }
 
 // Get products by category
-function getProductsByCategory(category) {
+async function getProductsByCategory(category) {
   if (category === "all") return getAllProducts();
-  return Object.values(PRODUCTS).filter(
-    (product) => product.category === category
-  );
+  try {
+    const list = await window.API.listProducts(category);
+    return list.map(mapApiProduct);
+  } catch (e) {
+    return Object.values(PRODUCTS).filter(
+      (product) => product.category === category
+    );
+  }
 }
 
 // Get single product by ID
-function getProductById(id) {
-  return PRODUCTS[id];
+async function getProductById(id) {
+  try {
+    const p = await window.API.getProduct(id);
+    return mapApiProduct(p);
+  } catch (e) {
+    return PRODUCTS[id];
+  }
 }
 
 // Render products grid
@@ -265,11 +331,7 @@ function renderProducts(products) {
     .map(
       (product) => `
         <div class="product-card-modern" data-category="${product.category}">
-            ${
-              product.discount > 0
-                ? `<div class="discount-badge">${product.discount}% OFF</div>`
-                : ""
-            }
+            
             <div class="product-image-container">
                 <img src="${product.images.main}" alt="${
         product.name
@@ -304,10 +366,29 @@ function renderProducts(products) {
 // Render star rating
 // Get category display name
 function getCategoryName(category) {
+  // If object with name (defensive), prefer it
+  if (category && typeof category === "object") {
+    if (category.name) return category.name;
+    if (
+      category.key &&
+      window.CATEGORY_NAME_MAP &&
+      window.CATEGORY_NAME_MAP[category.key]
+    ) {
+      return window.CATEGORY_NAME_MAP[category.key];
+    }
+  }
+
+  // Prefer dynamic map loaded from API (covers new categories without code changes)
+  if (window.CATEGORY_NAME_MAP && typeof category === "string") {
+    const name = window.CATEGORY_NAME_MAP[category];
+    if (name) return name;
+  }
+
+  // Fallback to static mapping for known defaults
   const categoryNames = {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
-    "car-charger": "Avtomobil Şarjı",
+    "car-charger": "Avtomobil Aksesuarları",
     charger: "Şarj Cihazı",
   };
   return categoryNames[category] || category;
@@ -320,35 +401,73 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function initProductsPage() {
+async function initProductsPage() {
   // Get category from URL parameter
   const urlParams = new URLSearchParams(window.location.search);
   const category = urlParams.get("category") || "all";
 
+  // Render dynamic filters from API categories (fallback to static map)
+  await renderFilters(category);
+
   // Load products
-  const products = getProductsByCategory(category);
+  const products = await getProductsByCategory(category);
   renderProducts(products);
 
-  // Set active filter
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  filterBtns.forEach((btn) => {
-    btn.classList.remove("active");
-    if (btn.getAttribute("data-category") === category) {
-      btn.classList.add("active");
-    }
-  });
+  // Wire filter clicks (buttons are created in renderFilters)
+}
 
-  // Add filter event listeners
+async function renderFilters(activeKey) {
+  const container = document.querySelector(".filter-tabs");
+  if (!container) return;
+
+  // Fetch categories from API
+  let categories = [];
+  try {
+    categories = await window.API.listCategories(); // expects [{id,key,name}]
+    // Update global map for consistent naming across pages
+    window.CATEGORY_NAME_MAP = Object.fromEntries(
+      categories.map((c) => [c.key, c.name])
+    );
+  } catch (e) {
+    // fallback to static mapping keys used in getCategoryName
+    categories = [
+      { key: "earphone", name: getCategoryName("earphone") },
+      { key: "powerbank", name: getCategoryName("powerbank") },
+      { key: "charger", name: getCategoryName("charger") },
+      { key: "car-charger", name: getCategoryName("car-charger") },
+    ];
+  }
+
+  // Build buttons: All + categories
+  const html = [
+    `<button class="filter-btn ${
+      activeKey === "all" ? "active" : ""
+    }" data-category="all">Hamısı</button>`,
+    ...categories.map(
+      (c) => `
+      <button class="filter-btn ${
+        activeKey === c.key ? "active" : ""
+      }" data-category="${c.key}">
+        ${c.name}
+      </button>
+    `
+    ),
+  ].join("\n");
+
+  container.innerHTML = html;
+
+  // Add click handlers
+  const filterBtns = container.querySelectorAll(".filter-btn");
   filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const selectedCategory = btn.getAttribute("data-category");
 
-      // Update active filter
+      // Update active states
       filterBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
-      // Filter products
-      const filteredProducts = getProductsByCategory(selectedCategory);
+      // Load and render
+      const filteredProducts = await getProductsByCategory(selectedCategory);
       renderProducts(filteredProducts);
 
       // Update URL
