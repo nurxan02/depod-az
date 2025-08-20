@@ -1,0 +1,43 @@
+/* Global variables for sizing (adjust if needed) */
+:root {
+  --login-logo-max-height: 80px; /* login page logo max height */
+  --brand-logo-max-height: 28px; /* navbar/sidebar brand logo height */
+}
+
+/* LOGIN PAGE: shrink the login logo image */
+.login-logo h1 picture img,
+body.jazzmin-login .login-logo h1 picture img {
+  max-height: var(--login-logo-max-height) !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Center the login logo block */
+.login-page .login-logo,
+body.jazzmin-login .login-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* NAVBAR + SIDEBAR: brand logo sizing */
+.brand-link .brand-image,
+.brand-link .brand-image-xl,
+.main-header .brand-link .brand-image,
+.main-header .brand-link .brand-image-xl,
+.main-sidebar .brand-link .brand-image,
+.main-sidebar .brand-link .brand-image-xl {
+  max-height: var(--brand-logo-max-height) !important;
+  height: var(--brand-logo-max-height) !important;
+  width: auto !important;
+  border-radius: 10px !important; /* remove border radius */
+}
+
+/* Keep brand text aligned vertically with the smaller logo */
+.brand-link .brand-text {
+  line-height: var(--brand-logo-max-height);
+}
+
+.main-footer .float-right.d-none.d-sm-inline {
+  display: none !important;
+}

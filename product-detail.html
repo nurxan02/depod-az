@@ -11,6 +11,8 @@
       content="Depod məhsul detalları və texniki xüsusiyyətlər"
     />
     <meta name="keywords" content="depod məhsul, texniki xüsusiyyətlər" />
+    
+
 
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#000000" />
@@ -133,8 +135,8 @@
 
 
               <div class="product-actions">
-                <button class="btn-add-to-cart" onclick="window.location.href='tel:+994XXXXXXXXX'">İstehsalçı ilə əlaqə</button>
-                <button class="btn-buy-now" onclick="window.location.href='#'">Mağazanı Tap</button>
+                <button class="btn-add-to-cart" id="offerBtn">Təklif göndər</button>
+                <button class="btn-buy-now" onclick="window.location.href='https://www.example.com'">Mağazanı Tap</button>
               </div>
 
               <div class="product-guarantee">
@@ -289,11 +291,141 @@
       </div>
     </footer>
 
+    <!-- Offer Modal -->
+    <div id="offerModal" class="offer-modal">
+      <div class="offer-modal-content">
+        <div class="offer-modal-header">
+          <h2>Məhsul Təklifi</h2>
+          <button class="offer-modal-close" id="offerModalClose">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="offer-modal-body">
+          <form id="offerForm" class="offer-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">Ad *</label>
+                <input type="text" id="firstName" name="first_name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="lastName">Soyad *</label>
+                <input type="text" id="lastName" name="last_name" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerPhone">Telefon nömrəsi *</label>
+                <input type="tel" id="customerPhone" name="phone_number" inputmode="numeric" pattern="[0-9\+\-\(\)\s]+" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="customerCity">Şəhər *</label>
+                <select id="customerCity" name="city" required>
+                  <option value="">Şəhər seçin...</option>
+                  <option value="baku">Bakı</option>
+                  <option value="ganja">Gəncə</option>
+                  <option value="sumgait">Sumqayıt</option>
+                  <option value="mingachevir">Mingəçevir</option>
+                  <option value="lankaran">Lənkəran</option>
+                  <option value="sheki">Şəki</option>
+                  <option value="shirvan">Şirvan</option>
+                  <option value="nakhchivan">Naxçıvan</option>
+                  <option value="gabala">Qəbələ</option>
+                  <option value="guba">Quba</option>
+                  <option value="shamakhi">Şamaxı</option>
+                  <option value="goychay">Göyçay</option>
+                  <option value="agdash">Ağdaş</option>
+                  <option value="barda">Bərdə</option>
+                  <option value="beylagan">Beyləqan</option>
+                  <option value="bilasuvar">Biləsuvar</option>
+                  <option value="jabrayil">Cəbrayıl</option>
+                  <option value="jalilabad">Cəlilabad</option>
+                  <option value="dashkasan">Daşkəsən</option>
+                  <option value="fuzuli">Füzuli</option>
+                  <option value="gadabay">Gədəbəy</option>
+                  <option value="goranboy">Goranboy</option>
+                  <option value="goygol">Göygöl</option>
+                  <option value="hajigabul">Hacıqabul</option>
+                  <option value="imishli">İmişli</option>
+                  <option value="ismayilli">İsmayıllı</option>
+                  <option value="kalbajar">Kəlbəcər</option>
+                  <option value="kurdamir">Kürdəmir</option>
+                  <option value="lachin">Laçın</option>
+                  <option value="lerik">Lerik</option>
+                  <option value="masalli">Masallı</option>
+                  <option value="neftchala">Neftçala</option>
+                  <option value="oghuz">Oğuz</option>
+                  <option value="qakh">Qax</option>
+                  <option value="qazakh">Qazax</option>
+                  <option value="qobustan">Qobustan</option>
+                  <option value="qusar">Qusar</option>
+                  <option value="saatli">Saatlı</option>
+                  <option value="sabirabad">Sabirabad</option>
+                  <option value="salyan">Salyan</option>
+                  <option value="shamkir">Şəmkir</option>
+                  <option value="shusha">Şuşa</option>
+                  <option value="siyazan">Siyəzən</option>
+                  <option value="tartar">Tərtər</option>
+                  <option value="tovuz">Tovuz</option>
+                  <option value="ujar">Ucar</option>
+                  <option value="yardimli">Yardımlı</option>
+                  <option value="yevlakh">Yevlax</option>
+                  <option value="zangilan">Zəngilan</option>
+                  <option value="zardab">Zərdab</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="quantity">Miqdar (ədəd) *</label>
+              <div class="quantity-counter">
+                <button type="button" class="quantity-btn quantity-minus">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" id="quantity" name="quantity" min="1" max="1000" value="1"  required>
+                <button type="button" class="quantity-btn quantity-plus">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="customerEmail">E-mail (istəyə görə)</label>
+              <input type="email" id="customerEmail" name="email">
+            </div>
+            
+            <div class="form-group">
+              <label for="offerText">Təklifiniz (istəyə görə)</label>
+              <textarea id="offerText" name="offer_text" rows="4" placeholder="Məhsul üçün təklifiniz..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" id="offerFormCancel">Ləğv et</button>
+              <button type="submit" class="btn-submit">Təklif göndər</button>
+            </div>
+          </form>
+          
+          <div id="offerSuccess" class="offer-success" style="display: none;">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Təşəkkürlər!</h3>
+            <p>Təklifiniz uğurla göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.</p>
+            <button class="btn-success-close" id="successClose">Bağla</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <!-- JavaScript -->
   <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script src="js/products.js"></script>
   <script src="js/product-detail.js"></script>
+  <script src="js/product-offer.js"></script>
   <script src="js/footer.js"></script>
 
   </body>

@@ -94,7 +94,7 @@
     !API_BASE &&
     (location.hostname === "localhost" || location.hostname === "127.0.0.1")
   ) {
-    setBase("http://127.0.0.1:8000sda");
+    setBase("http://127.0.0.1:8000");
   }
 
   window.API = {
