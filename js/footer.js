@@ -46,8 +46,13 @@
   // Description paragraph
   setText(".footer .footer-description", data.description, 300);
   // Right contact block
-  setText(".footer .footer-contact p:nth-child(1)", data.email);
-  setText(".footer .footer-contact p:nth-child(2)", data.phone);
+  // setText(".footer .footer-contact p:nth-child(1) a", data.email);
+  // setText(".footer .footer-contact p:nth-child(2) a", data.phone);
+  const contactInfo = document.querySelector(".footer-contact");
+  contactInfo.innerHTML = `
+              <p><a href="mailto:${data.email}">${data.email}</a></p>
+              <p><a href="tel:${data.phone}">${data.phone}</a></p>
+  `;
   // Bottom text (if present)
   const bottom = document.querySelector(".footer .footer-bottom p");
   if (bottom && isStr(data.bottom_text))
