@@ -11,6 +11,8 @@ from .views import (
     admin_dashboard_view,
     analytics_stats,
     analytics_export_pdf,
+    track_site_visit,
+    visit_debug,
 )
 
 router = DefaultRouter()
@@ -29,4 +31,7 @@ urlpatterns = [
     # Analytics endpoints
     path('dashboard/analytics/stats/', analytics_stats, name='admin_analytics_stats'),
     path('dashboard/analytics/export-pdf/', analytics_export_pdf, name='admin_analytics_export_pdf'),
+    # Site visit tracking (per tab/day)
+    path('visit/track/', track_site_visit, name='track_site_visit'),
+    path('visit/debug/', visit_debug, name='visit_debug'),
 ]

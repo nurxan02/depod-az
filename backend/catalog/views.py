@@ -9,6 +9,9 @@ from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+from django.core.cache import cache
+from django.http import JsonResponse
 
 from .models import Category, Product, AboutPage, ContactPage, FooterSettings, ProductOffer, ContactMessage, SiteVisit
 from .serializers import (
@@ -247,6 +250,49 @@ def analytics_stats(request):
         },
     'recent_offers': recent_offers,
     'status_counts': status_counts,
+    })
+
+
+@csrf_exempt
+def track_site_visit(request):
+    """Record one visit per session per day, once per tab.
+    Client should call this once per tab using sessionStorage flag; we also guard with cache.
+    """
+    if request.method != 'POST':
+        return HttpResponse(status=405)
+    try:
+        if not request.session.session_key:
+            request.session.save()
+        session_key = request.session.session_key
+        tab_id = request.POST.get('tab_id') or request.headers.get('X-Tab-Id') or 'default'
+        today = timezone.localdate()
+        # Cache key to prevent duplicates per tab per day
+        cache_key = f"visit:{today}:{session_key}:{tab_id}"
+        if not cache.get(cache_key):
+            SiteVisit.objects.get_or_create(date=today, session_key=session_key)
+            # Mark as seen for 1 day
+            cache.set(cache_key, True, 60 * 60 * 24)
+        return HttpResponse(status=204)
+    except Exception:
+        # Never block; still 204
+        return HttpResponse(status=204)
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def visit_debug(request):
+    """Return today's visit counts for current session and overall (for quick testing)."""
+    if not request.session.session_key:
+        request.session.save()
+    session_key = request.session.session_key
+    today = timezone.localdate()
+    per_session = SiteVisit.objects.filter(date=today, session_key=session_key).count()
+    total_today = SiteVisit.objects.filter(date=today).count()
+    return Response({
+        'today': str(today),
+        'session_key': session_key,
+        'per_session_today': per_session,
+        'total_today': total_today,
     })
 
 

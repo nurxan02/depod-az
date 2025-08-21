@@ -1,5 +1,32 @@
 // Mobile Navigation
 document.addEventListener("DOMContentLoaded", function () {
+  // Per-tab, once-per-day site visit tracking
+  try {
+    // If opened from static server (e.g., 127.0.0.1:5500), send ping to Django at 127.0.0.1:8000
+    const API_BASE =
+      window.location.port === "8000" ? "" : "http://127.0.0.1:8000";
+    const key = "depod_visit_ping";
+    const today = new Date().toISOString().slice(0, 10);
+    const stored = sessionStorage.getItem(key);
+    if (stored !== today) {
+      const tabKey = "depod_tab_id";
+      let tabId = sessionStorage.getItem(tabKey);
+      if (!tabId) {
+        tabId = Math.random().toString(36).slice(2);
+        sessionStorage.setItem(tabKey, tabId);
+      }
+      const form = new FormData();
+      form.append("tab_id", tabId);
+      fetch(`${API_BASE}/api/visit/track/`, {
+        method: "POST",
+        body: form,
+        credentials: "include",
+      })
+        .then(() => sessionStorage.setItem(key, today))
+        .catch(() => {});
+    }
+  } catch (e) {}
+
   const navToggle = document.getElementById("nav-toggle");
   const navMenu = document.getElementById("nav-menu");
   const navLinks = document.querySelectorAll(".nav-link");

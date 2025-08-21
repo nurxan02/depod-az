@@ -24,7 +24,7 @@
     }
   }
 
-  // Base sources priority: window var -> meta tag -> same-origin -> dev fallback
+  // Base sources priority: window var -> meta tag -> localStorage (localhost) -> dev-friendly fallback -> same-origin
   let API_BASE =
     (typeof window !== "undefined" && window.DEPOD_API_BASE) ||
     readMetaBase() ||
@@ -38,7 +38,17 @@
     }
   }
 
-  // If still empty and we are served via http(s), prefer same-origin
+  // Dev-friendly default: if on localhost and non-8000 port (e.g., 5500), assume Django on 127.0.0.1:8000
+  if (
+    !API_BASE &&
+    (location.hostname === "localhost" || location.hostname === "127.0.0.1") &&
+    location.port &&
+    location.port !== "8000"
+  ) {
+    API_BASE = "http://127.0.0.1:8000";
+  }
+
+  // Otherwise, if still empty and we are served via http(s), prefer same-origin
   if (!API_BASE && /^https?:$/.test(location.protocol)) {
     API_BASE = location.origin;
   }
