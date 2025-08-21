@@ -423,3 +423,22 @@ class ContactMessage(models.Model):
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} - {self.get_subject_display()}"
+
+
+# Simple unique daily site visits (per session)
+class SiteVisit(models.Model):
+    date = models.DateField(db_index=True)
+    session_key = models.CharField(max_length=40, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("date", "session_key")
+        indexes = [
+            models.Index(fields=["date"]),
+            models.Index(fields=["session_key"]),
+        ]
+        verbose_name = "Sayt Ziyarəti"
+        verbose_name_plural = "Sayt Ziyarətləri"
+
+    def __str__(self) -> str:
+        return f"{self.date} - {self.session_key}"

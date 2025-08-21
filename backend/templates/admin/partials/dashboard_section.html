@@ -1,0 +1,334 @@
+{% load static %}
+<style>
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  button[data-tab] {
+    font-size: 13px !important;
+  }
+  .status-pending {
+    background: #f59e0b;
+  }
+  .status-reviewed {
+    background: #3b82f6;
+  }
+  .status-accepted {
+    background: #10b981;
+  }
+  .status-rejected {
+    background: #ef4444;
+  }
+  /* Charts: make them responsive and consistent in height */
+  #lineChart, #pieChart { width: 100% !important; height: 320px !important; }
+  /* Prevent horizontal scroll on mobile within content area */
+  .content { overflow-x: hidden; }
+  /* Wrap header controls on small screens */
+  .content-header .d-flex {  gap: 8px; }
+  /* Wrap status tab buttons to avoid overflow */
+  #status-tabs { flex-wrap: wrap; }
+  #status-tabs .btn { margin-bottom: 6px; }
+</style>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-12 d-flex flex-row justify-content-center align-items-center">
+        <select
+          id="range-select"
+          class="form-control form-control-sm w-auto mr-2"
+        >
+          <option value="day">Günlük</option>
+          <option value="week">Həftəlik</option>
+          <option value="month">Aylıq</option>
+        </select>
+        <select
+          id="days-select"
+          class="form-control form-control-sm w-auto mr-2"
+        >
+          <option value="30">Son 30 gün</option>
+          <option value="60">Son 60 gün</option>
+          <option value="90" selected>Son 90 gün</option>
+        </select>
+        <button id="download-pdf" class="btn btn-sm btn-outline-primary">
+          PDF yüklə
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+  <div id="dash-alert" class="alert alert-warning d-none" role="alert"></div>
+    <div class="row ">
+      <div class="col-lg-4 col-12">
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h4>Ümumi Təkliflər (90 gün)</h4>
+            <h2 id="w_offers">-</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h4>Əlaqə Mesajları (90 gün)</h4>
+            <h2 id="w_contacts">-</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="small-box bg-dark">
+          <div class="inner">
+            <h4>Sayt Ziyarətləri (90 gün)</h4>
+            <h2 id="w_visits">-</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card card-outline card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Product Offer trendləri</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-outline card-secondary">
+          <div class="card-header">
+            <h3 class="card-title">Kateqoriyalara görə pay</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-12  justify-content-center">
+      <div class="card-header ">
+    <div class="btn-group btn-group-sm w-100" role="group" id="status-tabs">
+          <button class="btn btn-default" data-tab="all">
+            Hamısı
+            <span class="badge badge-secondary ml-1" data-count="all">0</span>
+          </button>
+          <button class="btn btn-default" data-tab="pending">
+            <span class="status-dot status-pending"></span>Gözləmədə
+            <span class="badge badge-secondary ml-1" data-count="pending"
+              >0</span
+            >
+          </button>
+          <button class="btn btn-default" data-tab="reviewed">
+            <span class="status-dot status-reviewed"></span>Baxılıb
+            <span class="badge badge-secondary ml-1" data-count="reviewed"
+              >0</span
+            >
+          </button>
+          <button class="btn btn-default" data-tab="accepted">
+            <span class="status-dot status-accepted"></span>Qəbul edilib
+            <span class="badge badge-secondary ml-1" data-count="accepted"
+              >0</span
+            >
+          </button>
+          <button class="btn btn-default" data-tab="rejected">
+            <span class="status-dot status-rejected"></span>Rədd edilib
+            <span class="badge badge-secondary ml-1" data-count="rejected"
+              >0</span
+            >
+          </button>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0" id="recentTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Müştəri</th>
+                <th>Məhsul</th>
+                <th>Miqdar</th>
+                <th>Status</th>
+                <th>Tarix</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  let lineC, pieC, cached;
+  function statusDot(s) {
+    const map = {
+      pending: "status-pending",
+      reviewed: "status-reviewed",
+      accepted: "status-accepted",
+      rejected: "status-rejected",
+    };
+    return `<span class="status-dot ${map[s] || ""}"></span>${s}`;
+  }
+  async function load() {
+    const range = document.getElementById("range-select").value;
+    const days = document.getElementById("days-select").value;
+    try {
+      const res = await fetch(
+        `{% url 'api:admin_analytics_stats' %}?range=${range}&days=${days}`,
+        {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+          credentials: "same-origin",
+        }
+      );
+      if (!res.ok) {
+        console.error("Analytics stats failed", res.status);
+        const a = document.getElementById('dash-alert');
+        a.classList.remove('d-none');
+        a.classList.add('alert-danger');
+        a.textContent = 'Analytics endpoint-a qoşulmaq mümkün olmadı ('+res.status+').';
+        return;
+      }
+      cached = await res.json();
+    } catch (err) {
+      console.error("Analytics error", err);
+      return;
+    }
+    document.getElementById("w_offers").textContent = cached.widgets.offers_90;
+    document.getElementById("w_contacts").textContent =
+      cached.widgets.contacts_90;
+    document.getElementById("w_visits").textContent = cached.widgets.visits_90;
+    if (window.Chart) {
+      const lctx = document.getElementById("lineChart");
+      if (lineC) lineC.destroy();
+      lineC = new Chart(lctx, {
+        type: "line",
+        data: {
+          labels: cached.line.labels,
+          datasets: [
+            {
+              label: "Product Offers",
+              data: cached.line.values,
+              fill: false,
+              borderColor: "#4f46e5",
+              tension: 0.3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          interaction: { intersect: false, mode: 'index' },
+          scales: { x: { ticks: { maxRotation: 45, minRotation: 0 } } }
+        },
+      });
+      const pctx = document.getElementById("pieChart");
+      if (pieC) pieC.destroy();
+      pieC = new Chart(pctx, {
+        type: "doughnut",
+        data: {
+          labels: cached.pie.labels,
+          datasets: [
+            {
+              data: cached.pie.values,
+              backgroundColor: [
+                "#22c55e",
+                "#3b82f6",
+                "#f59e0b",
+                "#ef4444",
+                "#8b5cf6",
+                "#06b6d4",
+                "#84cc16",
+                "#f97316",
+                "#e11d48",
+              ],
+            },
+          ],
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } },
+      });
+    } else {
+      console.warn('Chart.js yüklenmədi; qrafiklər göstərilməyəcək.');
+    }
+    const counts = cached.status_counts || {};
+    document.querySelectorAll("#status-tabs [data-count]").forEach((el) => {
+      const key = el.getAttribute("data-count");
+      el.textContent = counts[key] || 0;
+    });
+    renderTable("all");
+  }
+  function renderTable(filter) {
+    const tbody = document.querySelector("#recentTable tbody");
+    tbody.innerHTML = "";
+    (cached.recent_offers || [])
+      .filter((r) => filter === "all" || r.status === filter)
+      .forEach((r) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${r.id}</td><td>${r.first_name} ${
+          r.last_name
+        }</td><td>${r["product__name"] || ""}</td><td>${
+          r.quantity
+        }</td><td>${statusDot(r.status)}</td><td>${new Date(
+          r.created_at
+        ).toLocaleString()}</td>`;
+        tbody.appendChild(tr);
+      });
+  }
+  Array.from(document.querySelectorAll("[data-tab]")).forEach((b) =>
+    b.addEventListener("click", () => renderTable(b.dataset.tab))
+  );
+  ["range-select", "days-select"].forEach((id) =>
+    document.getElementById(id).addEventListener("change", load)
+  );
+  async function downloadPDF() {
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+    const toBase64 = (canvas) => canvas.toDataURL("image/png");
+    const form = new FormData();
+    form.append("line_image", toBase64(document.getElementById("lineChart")));
+    form.append("pie_image", toBase64(document.getElementById("pieChart")));
+    const resp = await fetch("{% url 'api:admin_analytics_export_pdf' %}", {
+      method: "POST",
+      body: form,
+      headers: { "X-CSRFToken": getCookie("csrftoken") },
+      credentials: "same-origin",
+    });
+    if (!resp.ok) {
+      console.error("PDF export failed", resp.status);
+      return;
+    }
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "analytics.pdf";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  document
+    .getElementById("download-pdf")
+    .addEventListener("click", downloadPDF);
+  // Ensure charts resize when containers change size
+  (function setupChartResize(){
+    if (!('ResizeObserver' in window)) { window.addEventListener('resize', ()=>{ lineC&&lineC.resize(); pieC&&pieC.resize(); }); return; }
+    const ro = new ResizeObserver(()=>{ lineC&&lineC.resize(); pieC&&pieC.resize(); });
+    const lineParent = document.getElementById('lineChart')?.parentElement;
+    const pieParent = document.getElementById('pieChart')?.parentElement;
+    if(lineParent) ro.observe(lineParent);
+    if(pieParent) ro.observe(pieParent);
+  })();
+  load();
+</script>

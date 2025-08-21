@@ -34,12 +34,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Analytics visit tracker (must be after Session & Auth middleware)
+    'catalog.middleware.SiteVisitMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -199,7 +201,7 @@ JAZZMIN_UI_TWEAKS = {
     "layout_boxed": False,
     "footer_fixed": True,
     "sidebar_fixed": True,
-    "sidebar": "sidebar-dark-warning",
+    "sidebar": "sidebar-dark-success",
     "sidebar_nav_small_text": False,
     "sidebar_disable_expand": False,
     "sidebar_nav_child_indent": False,
@@ -216,6 +218,7 @@ JAZZMIN_UI_TWEAKS = {
         "danger": "btn-danger",
         "success": "btn-success"
     }
+
 }
 
 

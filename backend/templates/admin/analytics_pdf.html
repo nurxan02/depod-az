@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 8px;
+      }
+      .row {
+        display: flex;
+        gap: 16px;
+      }
+      .card {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #e5e7eb;
+        padding: 6px;
+        text-align: left;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Depod Analytics</h1>
+    <p>Yaradılma vaxtı: {{ generated_at|date:"Y-m-d" }}</p>
+    <div class="row">
+      <div class="card" style="flex: 2">
+        <h3>Product Offer trendləri</h3>
+        {% if line_image %}<img
+          src="{{ line_image }}"
+          style="max-width: 100%"
+        />{% endif %}
+      </div>
+      <div class="card" style="flex: 1">
+        <h3>Kateqoriya payı</h3>
+        {% if pie_image %}<img
+          src="{{ pie_image }}"
+          style="max-width: 100%"
+        />{% endif %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <strong>Ümumi Təkliflər (90 gün):</strong> {{ widgets.offers_90 }}
+      </div>
+      <div class="card">
+        <strong>Əlaqə Mesajları (90 gün):</strong> {{ widgets.contacts_90 }}
+      </div>
+      <div class="card">
+        <strong>Ziyarət (90 gün):</strong> {{ widgets.visits_90 }}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Son Təkliflər (7 gün)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Müştəri</th>
+            <th>Məhsul</th>
+            <th>Miqdar</th>
+            <th>Status</th>
+            <th>Tarix</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in recent_offers %}
+          <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.first_name }} {{ r.last_name }}</td>
+            <td>{{ r.product__name }}</td>
+            <td>{{ r.quantity }}</td>
+            <td>{{ r.status }}</td>
+            <td>{{ r.created_at|date:"Y-m-d" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">Məlumat yoxdur</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
