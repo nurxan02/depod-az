@@ -11,8 +11,6 @@
       content="Depod məhsul detalları və texniki xüsusiyyətlər"
     />
     <meta name="keywords" content="depod məhsul, texniki xüsusiyyətlər" />
-    
-
 
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#000000" />
@@ -37,7 +35,10 @@
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,7 +71,6 @@
             <li class="nav-item">
               <a href="contact.html" class="nav-link">Əlaqə</a>
             </li>
-
           </ul>
         </div>
 
@@ -111,10 +111,9 @@
             <!-- Product Info -->
             <div class="product-info-section">
               <div class="product-header">
-                <h2>Depod</h2><h1 id="productName" class="product-title-large"></h1>
+                <h2>Depod</h2>
+                <h1 id="productName" class="product-title-large"></h1>
               </div>
-
-              
 
               <div class="product-highlights-container" id="productHighlights">
                 <!-- Highlights will be populated dynamically -->
@@ -132,24 +131,35 @@
                 </ul>
               </div>
 
-
-
               <div class="product-actions">
-                <button class="btn-add-to-cart" id="offerBtn">Təklif göndər</button>
-                <button class="btn-buy-now" onclick="window.location.href='https://www.example.com'">Mağazanı Tap</button>
+                <button class="btn-add-to-cart" id="offerBtn">
+                  Təklif göndər
+                </button>
+                <button
+                  class="btn-buy-now"
+                  onclick="window.location.href='https://www.example.com'"
+                >
+                  Mağazanı Tap
+                </button>
               </div>
 
               <div class="product-guarantee">
                 <div class="guarantee-item">
-                  <span class="guarantee-icon"><i class="fas fa-shield-alt"></i></span>
+                  <span class="guarantee-icon"
+                    ><i class="fas fa-shield-alt"></i
+                  ></span>
                   <span>1 il zəmanət</span>
                 </div>
                 <div class="guarantee-item">
-                  <span class="guarantee-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                  <span class="guarantee-icon"
+                    ><i class="fa-solid fa-truck-fast"></i
+                  ></span>
                   <span>Pulsuz çatdırılma</span>
                 </div>
                 <div class="guarantee-item">
-                  <span class="guarantee-icon"><i class="fa-solid fa-arrow-rotate-left"></i></i></span>
+                  <span class="guarantee-icon"
+                    ><i class="fa-solid fa-arrow-rotate-left"></i
+                  ></span>
                   <span>14 gün geri qaytarma</span>
                 </div>
               </div>
@@ -195,20 +205,17 @@
           </div>
         </div>
       </section>
-                </div>
-        </div>
-      </section>
-
-      <!-- Related Products -->
-      <section class="related-products">
-        <div class="container">
-          <h2 class="section-title">Oxşar Məhsullar</h2>
-          <div class="related-products-grid" id="relatedProducts">
-            <!-- Related products will be populated dynamically -->
-          </div>
-        </div>
-      </section>
     </div>
+
+    <!-- Related Products -->
+    <section class="related-products">
+      <div class="container">
+        <h2 class="section-title">Oxşar Məhsullar</h2>
+        <div class="related-products-grid" id="relatedProducts">
+          <!-- Related products will be populated dynamically -->
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -227,7 +234,7 @@
               Keyfiyyətli texnoloji məhsullar istehsalçısı. Yenilikçi həllər və
               etibarlı məhsullarla sizin xidmətinizdəyik.
             </p>
-                        <div class="social-icons">
+            <div class="social-icons">
               <a
                 href="https://instagram.com/depod"
                 target="_blank"
@@ -281,12 +288,10 @@
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2025 Depod. Bütün hüquqlar qorunur.
-            <a
-
-              href="https://nurkhanmasimzada.site"
-              >Developed by Masimzada</a
-            ></p>
+          <p>
+            &copy; 2025 Depod. Bütün hüquqlar qorunur.
+            <a href="https://nurkhanmasimzada.site">Developed by Masimzada</a>
+          </p>
         </div>
       </div>
     </footer>
@@ -300,27 +305,34 @@
             <i class="fas fa-times"></i>
           </button>
         </div>
-        
+
         <div class="offer-modal-body">
           <form id="offerForm" class="offer-form">
             <div class="form-row">
               <div class="form-group">
                 <label for="firstName">Ad *</label>
-                <input type="text" id="firstName" name="first_name" required>
+                <input type="text" id="firstName" name="first_name" required />
               </div>
-              
+
               <div class="form-group">
                 <label for="lastName">Soyad *</label>
-                <input type="text" id="lastName" name="last_name" required>
+                <input type="text" id="lastName" name="last_name" required />
               </div>
             </div>
-            
+
             <div class="form-row">
               <div class="form-group">
                 <label for="customerPhone">Telefon nömrəsi *</label>
-                <input type="tel" id="customerPhone" name="phone_number" inputmode="numeric" pattern="[0-9\+\-\(\)\s]+" required>
+                <input
+                  type="tel"
+                  id="customerPhone"
+                  name="phone_number"
+                  inputmode="numeric"
+                  pattern="[0-9\+\-\(\)\s]+"
+                  required
+                />
               </div>
-              
+
               <div class="form-group">
                 <label for="customerCity">Şəhər *</label>
                 <select id="customerCity" name="city" required>
@@ -378,55 +390,71 @@
                 </select>
               </div>
             </div>
-            
+
             <div class="form-group">
               <label for="quantity">Miqdar (ədəd) *</label>
               <div class="quantity-counter">
                 <button type="button" class="quantity-btn quantity-minus">
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="number" id="quantity" name="quantity" min="1" max="1000" value="1"  required>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  max="1000"
+                  value="1"
+                  required
+                />
                 <button type="button" class="quantity-btn quantity-plus">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
             </div>
-            
+
             <div class="form-group">
               <label for="customerEmail">E-mail (istəyə görə)</label>
-              <input type="email" id="customerEmail" name="email">
+              <input type="email" id="customerEmail" name="email" />
             </div>
-            
+
             <div class="form-group">
               <label for="offerText">Təklifiniz (istəyə görə)</label>
-              <textarea id="offerText" name="offer_text" rows="4" placeholder="Məhsul üçün təklifiniz..."></textarea>
+              <textarea
+                id="offerText"
+                name="offer_text"
+                rows="4"
+                placeholder="Məhsul üçün təklifiniz..."
+              ></textarea>
             </div>
-            
+
             <div class="form-actions">
-              <button type="button" class="btn-cancel" id="offerFormCancel">Ləğv et</button>
+              <button type="button" class="btn-cancel" id="offerFormCancel">
+                Ləğv et
+              </button>
               <button type="submit" class="btn-submit">Təklif göndər</button>
             </div>
           </form>
-          
-          <div id="offerSuccess" class="offer-success" style="display: none;">
+
+          <div id="offerSuccess" class="offer-success" style="display: none">
             <div class="success-icon">
               <i class="fas fa-check-circle"></i>
             </div>
             <h3>Təşəkkürlər!</h3>
-            <p>Təklifiniz uğurla göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.</p>
+            <p>
+              Təklifiniz uğurla göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.
+            </p>
             <button class="btn-success-close" id="successClose">Bağla</button>
           </div>
         </div>
       </div>
     </div>
 
-  <!-- JavaScript -->
-  <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/product-detail.js"></script>
-  <script src="js/product-offer.js"></script>
-  <script src="js/footer.js"></script>
-
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/product-detail.js"></script>
+    <script src="js/product-offer.js"></script>
+    <script src="js/footer.js"></script>
   </body>
 </html>

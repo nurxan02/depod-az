@@ -922,10 +922,6 @@ html {
 }
 
 /* Product Pages Styles */
-.product-header {
-  /* padding: 20px 0 10px; */
-  /* background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); */
-}
 
 .breadcrumb {
   margin-bottom: 0px;
@@ -1886,18 +1882,32 @@ html {
   margin-top: 40px;
 }
 
-.map-placeholder {
+.map-box {
   height: 300px;
-  background: #f8f9fa;
+  background-image: url("/image/backgrounds/map.png");
+  background-size: cover;
+  background-position: center;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #e5e5e5;
 }
-
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff58;
+  border-radius: 16px;
+}
 .map-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  padding: 20px;
 }
 
 .map-icon {
@@ -3335,10 +3345,9 @@ html {
   align-items: center;
   background: #f8f9fa;
   border: 2px solid #e9ecef;
-  border-radius: 12px;
+  border-radius: 7px;
   overflow: hidden;
   width: fit-content;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   margin: 8px 0;
 }
 
@@ -3469,10 +3478,18 @@ html {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
+  animation: spin-center 1s linear infinite;
 }
 
 /* Animations */
+@keyframes spin-center {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -1,0 +1,23 @@
+{% extends "email/base_email.html" %} {% block content %}
+<h1>Yeni Məhsul Təklifi</h1>
+<p>Aşağıda detalları görə bilərsiniz:</p>
+<dl class="meta">
+  <dt>Müştəri</dt>
+  <dd>{{ offer.first_name }} {{ offer.last_name }}</dd>
+  <dt>Telefon</dt>
+  <dd>{{ offer.phone_number }}</dd>
+  <dt>E‑poçt</dt>
+  <dd>{{ offer.email|default:"-" }}</dd>
+  <dt>Şəhər</dt>
+  <dd>{{ offer.city_display }}</dd>
+  <dt>Məhsul</dt>
+  <dd>{{ offer.product_name }}</dd>
+  <dt>Miqdar</dt>
+  <dd>{{ offer.quantity }}</dd>
+  <dt>Təklif mətni</dt>
+  <dd>{{ offer.offer_text|default:"-" }}</dd>
+  <dt>Tarix</dt>
+  <dd>{{ offer.created_at }}</dd>
+</dl>
+<p><a href="{{ admin_url }}" target="_blank">Admin paneldə aç</a></p>
+{% endblock %}

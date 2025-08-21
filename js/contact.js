@@ -136,3 +136,85 @@
   if (mapBtn && isStr(data.map_url))
     mapBtn.onclick = () => window.open(data.map_url, "_blank");
 })();
+
+// Contact form submit -> POST to backend via API._url
+(function () {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  function getEndpoint() {
+    if (window.API && typeof API._url === "function") {
+      return API._url("/api/contact-messages/");
+    }
+    const base = (window.DEPOD_API_BASE || "http://127.0.0.1:8000").replace(
+      /\/$/,
+      ""
+    );
+    return base + "/api/contact-messages/";
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const submitBtn = document.querySelector(".submit-btn");
+    const btnText = submitBtn && submitBtn.querySelector(".btn-text");
+    const btnLoader = submitBtn && submitBtn.querySelector(".btn-loader");
+
+    function setLoading(v) {
+      if (!submitBtn || !btnText || !btnLoader) return;
+      btnText.style.display = v ? "none" : "block";
+      btnLoader.style.display = v ? "block" : "none";
+      submitBtn.disabled = v;
+    }
+
+    const payload = {
+      first_name: document.getElementById("firstName")?.value.trim() || "",
+      last_name: document.getElementById("lastName")?.value.trim() || "",
+      email: document.getElementById("email")?.value.trim() || "",
+      phone: document.getElementById("phone")?.value.trim() || "",
+      subject: document.getElementById("subject")?.value || "",
+      message: document.getElementById("message")?.value.trim() || "",
+      privacy_accepted: !!document.getElementById("privacy")?.checked,
+    };
+
+    setLoading(true);
+    try {
+      const res = await fetch(getEndpoint(), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        const msg =
+          err && err.detail
+            ? err.detail
+            : (err && Object.values(err)[0]) ||
+              "Göndərmə zamanı xəta baş verdi.";
+        throw new Error(Array.isArray(msg) ? msg.join(", ") : String(msg));
+      }
+      document.getElementById("successModal").style.display = "flex";
+      form.reset();
+    } catch (error) {
+      alert(error.message || "Mesaj göndərilə bilmədi. Daha sonra cəhd edin.");
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  // Expose closeModal globally for inline onclick compatibility
+  window.closeModal = function () {
+    const modal = document.getElementById("successModal");
+    if (modal) modal.style.display = "none";
+  };
+
+  // Close modal when clicking outside
+  const modal = document.getElementById("successModal");
+  if (modal) {
+    modal.addEventListener("click", function (e) {
+      if (e.target === this) window.closeModal();
+    });
+  }
+})();

@@ -1,8 +1,9 @@
 from rest_framework import viewsets, filters, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from .models import Category, Product, AboutPage, ContactPage, FooterSettings, ProductOffer
+from .models import Category, Product, AboutPage, ContactPage, FooterSettings, ProductOffer, ContactMessage
 from .serializers import (
     CategorySerializer,
     ProductListSerializer,
@@ -11,6 +12,7 @@ from .serializers import (
     ContactPageSerializer,
     FooterSettingsSerializer,
     ProductOfferSerializer,
+    ContactMessageSerializer,
 )
 # AboutPage API viewset
 from rest_framework import viewsets
@@ -88,6 +90,8 @@ class ProductOfferViewSet(viewsets.ModelViewSet):
     queryset = ProductOffer.objects.all()
     serializer_class = ProductOfferSerializer
     http_method_names = ['post']  # Yalnız POST metoduna icazə verir
+    authentication_classes = []  # No Session auth -> no CSRF required
+    permission_classes = [AllowAny]
     
     def create(self, request, *args, **kwargs):
         """Yeni məhsul təklifi yaradır"""
@@ -103,4 +107,28 @@ class ProductOfferViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         """Təklifi yadda saxlayarkən əlavə məlumatlar əlavə edir"""
+        serializer.save()
+
+
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
+    http_method_names = ["post"]
+    authentication_classes = []  # No Session auth -> no CSRF required
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(
+            {
+                "success": True,
+                "message": "Mesajınız uğurla göndərildi.",
+                "data": serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+    def perform_create(self, serializer):
         serializer.save()

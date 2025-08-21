@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Category, Product, ProductImage, ProductFeature, ProductSpec, ProductHighlight,
     AboutPage, AboutValue, AboutTeamMember, AboutTechFeature, AboutTechStat,
-    ContactPage, ContactWorkingHour, ContactFAQ, FooterSettings, ProductOffer
+    ContactPage, ContactWorkingHour, ContactFAQ, FooterSettings, ProductOffer, ContactMessage
 )
 
 
@@ -225,3 +225,31 @@ class ProductOfferAdmin(admin.ModelAdmin):
         updated = queryset.update(status='rejected')
         self.message_user(request, f"{updated} təklif rədd edildi olaraq işarələndi.")
     mark_as_rejected.short_description = "Rədd edildi olaraq işarələ"
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ("first_name", "last_name", "email", "phone", "subject", "status", "created_at")
+    list_filter = ("status", "subject", "created_at")
+    search_fields = ("first_name", "last_name", "email", "phone", "message")
+    readonly_fields = ("created_at", "updated_at")
+    list_editable = ("status",)
+    ordering = ("-created_at",)
+
+    fieldsets = (
+        ("Müraciətçi", {"fields": ("first_name", "last_name", "email", "phone")}),
+        ("Məzmun", {"fields": ("subject", "message", "privacy_accepted")}),
+        ("Status", {"fields": ("status", "created_at", "updated_at")}),
+    )
+
+    actions = ["mark_as_read", "archive"]
+
+    def mark_as_read(self, request, queryset):
+        updated = queryset.update(status="read")
+        self.message_user(request, f"{updated} mesaj oxundu olaraq işarələndi.")
+    mark_as_read.short_description = "Oxundu olaraq işarələ"
+
+    def archive(self, request, queryset):
+        updated = queryset.update(status="archived")
+        self.message_user(request, f"{updated} mesaj arxivləndi.")
+    archive.short_description = "Arxivlə"

@@ -285,12 +285,16 @@
       <div class="container">
         <h2 class="section-title">Məkanımız</h2>
         <div class="map-container">
-          <div class="map-placeholder">
-            <div class="map-content">
-              <div class="map-icon"><i class="fas fa-map-marker-alt"></i></div>
-              <h3>Depod Ofisi</h3>
-              <p>Bakı şəhəri, Azərbaycan</p>
-              <button class="map-btn">Xəritədə Aç</button>
+          <div class="map-box">
+            <div class="map-placeholder">
+              <div class="map-content">
+                <div class="map-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Depod Ofisi</h3>
+                <p>Bakı şəhəri, Azərbaycan</p>
+                <button class="map-btn">Xəritədə Aç</button>
+              </div>
             </div>
           </div>
         </div>
@@ -380,7 +384,7 @@
           <div class="footer-section">
             <h4 class="footer-title">Əlaqə</h4>
             <div class="footer-contact">
-                            <p>info@depod.az</p>
+              <p>info@depod.az</p>
               <p>+994 XX XXX XX XX</p>
             </div>
           </div>
@@ -400,49 +404,5 @@
     <script src="js/main.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/footer.js"></script>
-    <script>
-      // Contact form handling
-      document
-        .getElementById("contactForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const submitBtn = document.querySelector(".submit-btn");
-          const btnText = submitBtn.querySelector(".btn-text");
-          const btnLoader = submitBtn.querySelector(".btn-loader");
-
-          // Show loading state
-          btnText.style.display = "none";
-          btnLoader.style.display = "block";
-          submitBtn.disabled = true;
-
-          // Simulate form submission
-          setTimeout(() => {
-            // Hide loading state
-            btnText.style.display = "block";
-            btnLoader.style.display = "none";
-            submitBtn.disabled = false;
-
-            // Show success modal
-            document.getElementById("successModal").style.display = "flex";
-
-            // Reset form
-            this.reset();
-          }, 2000);
-        });
-
-      function closeModal() {
-        document.getElementById("successModal").style.display = "none";
-      }
-
-      // Close modal when clicking outside
-      document
-        .getElementById("successModal")
-        .addEventListener("click", function (e) {
-          if (e.target === this) {
-            closeModal();
-          }
-        });
-    </script>
   </body>
 </html>

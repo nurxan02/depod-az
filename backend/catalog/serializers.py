@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImage, ProductFeature, ProductSpec, ProductHighlight, ProductOffer
+from .models import Category, Product, ProductImage, ProductFeature, ProductSpec, ProductHighlight, ProductOffer, ContactMessage
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -218,3 +218,47 @@ class ProductOfferSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """Yeni təklif yaradır"""
         return ProductOffer.objects.create(**validated_data)
+
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "subject",
+            "message",
+            "privacy_accepted",
+        ]
+        extra_kwargs = {
+            "phone": {"required": False, "allow_blank": True},
+            "privacy_accepted": {"required": True},
+        }
+
+    def validate_first_name(self, value):
+        if not value or len(value.strip()) < 2:
+            raise serializers.ValidationError("Ad ən azı 2 hərf olmalıdır.")
+        return value.strip()
+
+    def validate_last_name(self, value):
+        if not value or len(value.strip()) < 2:
+            raise serializers.ValidationError("Soyad ən azı 2 hərf olmalıdır.")
+        return value.strip()
+
+    def validate_phone(self, value):
+        if not value:
+            return ""
+        import re
+        if not re.match(r"^[\+\d\s\-\(\)]{7,20}$", value.strip()):
+            raise serializers.ValidationError("Düzgün telefon nömrəsi daxil edin.")
+        return value.strip()
+
+    def validate_privacy_accepted(self, value):
+        if value is not True:
+            raise serializers.ValidationError("Məxfilik siyasəti qəbul edilməlidir.")
+        return value
+
+    def create(self, validated_data):
+        return ContactMessage.objects.create(**validated_data)

@@ -387,3 +387,39 @@ class ProductOffer(models.Model):
     @property
     def category_name(self):
         return self.product.category.name if self.product.category else "Kateqoriya yoxdur"
+
+
+class ContactMessage(models.Model):
+    SUBJECT_CHOICES = [
+        ("product-inquiry", "Məhsul haqqında sual"),
+        ("technical-support", "Texniki dəstək"),
+        ("complaint", "Şikayət"),
+        ("suggestion", "Təklif"),
+        ("partnership", "Əməkdaşlıq"),
+        ("other", "Digər"),
+    ]
+
+    STATUS_CHOICES = [
+        ("new", "Yeni"),
+        ("read", "Oxunub"),
+        ("archived", "Arxivləndi"),
+    ]
+
+    first_name = models.CharField(max_length=100, verbose_name="Ad")
+    last_name = models.CharField(max_length=100, verbose_name="Soyad")
+    email = models.EmailField(verbose_name="E-poçt")
+    phone = models.CharField(max_length=30, blank=True, verbose_name="Telefon")
+    subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES, verbose_name="Mövzu")
+    message = models.TextField(verbose_name="Mesaj")
+    privacy_accepted = models.BooleanField(default=False, verbose_name="Məxfilik qəbul edildi")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new", verbose_name="Status")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Göndərilmə tarixi")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Yenilənmə tarixi")
+
+    class Meta:
+        verbose_name = "Əlaqə Mesajı"
+        verbose_name_plural = "Əlaqə Mesajları"
+        ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name} - {self.get_subject_display()}"
