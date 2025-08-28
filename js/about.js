@@ -1,8 +1,16 @@
 // About page dynamic loader (non-destructive)
 (async function () {
-  // API endpoint (fallback to local backend if not provided)
-  const API_BASE = window.DEPOD_API_BASE || "http://127.0.0.1:8000";
-  const API_URL = API_BASE.replace(/\/$/, "") + "/api/about/";
+  // API endpoint (uses deployed base by default, localhost only in dev)
+  const deployed = "https://depod-api.onrender.com";
+  const isLocal =
+    location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  const fallback = isLocal ? "http://127.0.0.1:8000" : deployed;
+  const API_BASE = (
+    window.API && typeof window.API._url === "function"
+      ? window.API._url("")
+      : window.DEPOD_API_BASE || fallback
+  ).replace(/\/$/, "");
+  const API_URL = API_BASE + "/api/about/";
 
   // Helpers
   const qs = (sel) => document.querySelector(sel);

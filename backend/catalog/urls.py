@@ -13,6 +13,7 @@ from .views import (
     analytics_export_pdf,
     track_site_visit,
     visit_debug,
+    seed_demo,
 )
 
 router = DefaultRouter()
@@ -26,6 +27,8 @@ router.register(r'contact-messages', ContactMessageViewSet, basename='contact-me
 
 urlpatterns = [
     path('', include(router.urls)),
+    # Demo seed (DEV only)
+    path('seed/demo/', seed_demo, name='seed_demo'),
     # Custom dashboard (avoid /admin prefix to prevent collision with AdminSite)
     path('dashboard/', admin_dashboard_view, name='admin_dashboard'),
     # Analytics endpoints

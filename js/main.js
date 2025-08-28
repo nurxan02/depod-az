@@ -2,9 +2,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Per-tab, once-per-day site visit tracking
   try {
-    // If opened from static server (e.g., 127.0.0.1:5500), send ping to Django at 127.0.0.1:8000
-    const API_BASE =
-      window.location.port === "8000" ? "" : "http://127.0.0.1:8000";
+    // Send visit ping to backend (uses deployed base by default, localhost in dev)
+    const deployed = "https://depod-api.onrender.com";
+    const isLocal =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const fallback =
+      isLocal && location.port !== "8000" ? "http://127.0.0.1:8000" : deployed;
+    const API_BASE = (
+      window.API && typeof window.API._url === "function"
+        ? window.API._url("")
+        : window.DEPOD_API_BASE || fallback
+    ).replace(/\/$/, "");
     const key = "depod_visit_ping";
     const today = new Date().toISOString().slice(0, 10);
     const stored = sessionStorage.getItem(key);

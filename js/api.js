@@ -2,6 +2,8 @@
 // Example usage in browser console:
 //   API.setBase('https://api.yourdomain.com');
 (function () {
+  // Default deployed backend origin
+  const DEPLOYED_API_BASE = "https://depod-api.onrender.com";
   // Determine base once and reuse everywhere with safer defaults
   function readMetaBase() {
     const el = document.querySelector('meta[name="depod-api-base"]');
@@ -24,7 +26,7 @@
     }
   }
 
-  // Base sources priority: window var -> meta tag -> localStorage (localhost) -> dev-friendly fallback -> same-origin
+  // Base sources priority: window var -> meta tag -> localStorage (localhost) -> deployed default (non-localhost) -> dev-friendly localhost fallback -> same-origin
   let API_BASE =
     (typeof window !== "undefined" && window.DEPOD_API_BASE) ||
     readMetaBase() ||
@@ -36,6 +38,11 @@
     if (devOverride && isSafeUrl(devOverride)) {
       API_BASE = devOverride;
     }
+  }
+
+  // If not set and we're NOT on localhost, prefer deployed backend
+  if (!API_BASE && !isLocalhostHost(location.hostname)) {
+    API_BASE = DEPLOYED_API_BASE;
   }
 
   // Dev-friendly default: if on localhost and non-8000 port (e.g., 5500), assume Django on 127.0.0.1:8000

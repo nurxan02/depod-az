@@ -9,7 +9,8 @@ This repo contains a static frontend (GitHub Pages friendly) and a Django REST b
 - Configure API at runtime in your browser console:
 
 ```js
-API.setBase("http://127.0.0.1:8000"); // or your deployed backend origin
+// Optional: override API base (auto-uses https://depod-api.onrender.com in prod)
+API.setBase("https://depod-api.onrender.com");
 ```
 
 The setting persists in `localStorage`.

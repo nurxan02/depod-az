@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.http import JsonResponse
 
-from .models import Category, Product, AboutPage, ContactPage, FooterSettings, ProductOffer, ContactMessage, SiteVisit
+from .models import Category, Product, AboutPage, ContactPage, FooterSettings, ProductOffer, ContactMessage, SiteVisit, ProductFeature, ProductSpec, ProductHighlight
 from .serializers import (
     CategorySerializer,
     ProductListSerializer,
@@ -24,6 +24,8 @@ from .serializers import (
     ProductOfferSerializer,
     ContactMessageSerializer,
 )
+from django.conf import settings
+from django.db import transaction
 # AboutPage API viewset
 from rest_framework import viewsets
 class AboutPageViewSet(viewsets.ReadOnlyModelViewSet):
@@ -476,3 +478,148 @@ def analytics_export_pdf(request):
                 "PDF export hazır deyil: WeasyPrint sistem asılılıqları quraşdırılmayıb və ReportLab da mövcud deyil.",
                 status=503,
             )
+
+
+# -------- Demo Seed Endpoint (DEV only) ---------
+@api_view(["POST"])
+@permission_classes([AllowAny])
+@csrf_exempt
+def seed_demo(request):
+    """Create demo categories and products from JSON.
+    Only available when settings.DEBUG is True. Safe to call without CSRF.
+
+    Payload shape:
+    {
+      "reset": false,  # optional, if true deletes existing products/categories first
+      "categories": [
+        {"key": "earphone", "name": "Qulaqcıqlar", "description": "..."},
+        ...
+      ],
+      "products": [
+        {
+          "name": "Peak Earphones Black",
+          "category": "earphone",  # Category.key
+          "description": "...",  # optional
+          "price": 29.9,            # optional
+          "original_price": 39.9,   # optional
+          "discount": 25,           # optional
+          "features": ["Yüksək səs keyfiyyəti", {"text": "Rahat dizayn"}],  # optional
+          "specs": [{"label": "Bluetooth", "value": "5.3"}],             # optional
+          "highlights": [{"number": "01", "text": "Uzun batareya ömrü"}]  # optional
+        }
+      ]
+    }
+    """
+    if not settings.DEBUG:
+        return Response({"detail": "Seed endpoint disabled in production"}, status=status.HTTP_403_FORBIDDEN)
+
+    data = request.data if isinstance(request.data, dict) else {}
+    reset = bool(data.get("reset", False))
+
+    with transaction.atomic():
+        if reset:
+            # Delete children first due to FK constraints
+            ProductFeature.objects.all().delete()
+            ProductSpec.objects.all().delete()
+            ProductHighlight.objects.all().delete()
+            Product.objects.all().delete()
+            Category.objects.all().delete()
+
+        results = {"categories": 0, "products": 0, "features": 0, "specs": 0, "highlights": 0}
+        key_to_category = {}
+
+        # Create/update categories
+        for c in data.get("categories", []) or []:
+            try:
+                key = (c.get("key") or "").strip()
+                if not key:
+                    continue
+                name = (c.get("name") or key).strip()
+                desc = c.get("description") or ""
+                obj, created = Category.objects.get_or_create(
+                    key=key,
+                    defaults={"name": name, "description": desc},
+                )
+                if not created:
+                    changed = False
+                    if name and obj.name != name:
+                        obj.name = name; changed = True
+                    if desc is not None and obj.description != desc:
+                        obj.description = desc; changed = True
+                    if changed:
+                        obj.save()
+                else:
+                    results["categories"] += 1
+                key_to_category[key] = obj
+            except Exception:
+                # Skip invalid category entry
+                continue
+
+        created_product_ids = []
+        for p in data.get("products", []) or []:
+            try:
+                name = (p.get("name") or "").strip()
+                cat_key = (p.get("category") or "").strip()
+                if not name or not cat_key:
+                    continue
+                category = key_to_category.get(cat_key) or Category.objects.filter(key=cat_key).first()
+                if not category:
+                    category = Category.objects.create(key=cat_key, name=cat_key.title())
+                    results["categories"] += 1
+
+                prod = Product.objects.create(
+                    name=name,
+                    category=category,
+                    description=p.get("description") or "",
+                    price=p.get("price"),
+                    original_price=p.get("original_price"),
+                    discount=p.get("discount") or 0,
+                )
+                created_product_ids.append(prod.id)
+                results["products"] += 1
+
+                # Features: accept ["text", {"text": "..."}]
+                for f in p.get("features", []) or []:
+                    text = f if isinstance(f, str) else (f.get("text") if isinstance(f, dict) else None)
+                    text = (text or "").strip()
+                    if not text:
+                        continue
+                    ProductFeature.objects.create(product=prod, text=text)
+                    results["features"] += 1
+
+                # Specs: [{label, value}]
+                for s in p.get("specs", []) or []:
+                    if not isinstance(s, dict):
+                        continue
+                    label = (s.get("label") or "").strip()
+                    value = s.get("value")
+                    if not label or value is None:
+                        continue
+                    ProductSpec.objects.create(product=prod, label=label, value=str(value))
+                    results["specs"] += 1
+
+                # Highlights: [{number, text}] or ["01: text"]
+                for h in p.get("highlights", []) or []:
+                    number = ""
+                    text = ""
+                    if isinstance(h, dict):
+                        number = str(h.get("number", "") or "")
+                        text = h.get("text") or ""
+                    else:
+                        # parse "01: Something"
+                        s = str(h)
+                        if ":" in s:
+                            number, text = s.split(":", 1)
+                        else:
+                            text = s
+                    number = number.strip()
+                    text = text.strip()
+                    if not text:
+                        continue
+                    ProductHighlight.objects.create(product=prod, number=number, text=text)
+                    results["highlights"] += 1
+            except Exception:
+                # Skip invalid product entry
+                continue
+
+    return Response({"created": results, "product_ids": created_product_ids}, status=status.HTTP_201_CREATED)

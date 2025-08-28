@@ -1,7 +1,15 @@
 // Contact page dynamic loader (non-destructive)
 (async function () {
-  const API_BASE = window.DEPOD_API_BASE || "http://127.0.0.1:8000";
-  const API_URL = API_BASE.replace(/\/$/, "") + "/api/contact/";
+  const deployed = "https://depod-api.onrender.com";
+  const isLocal =
+    location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  const fallback = isLocal ? "http://127.0.0.1:8000" : deployed;
+  const API_BASE = (
+    window.API && typeof window.API._url === "function"
+      ? window.API._url("")
+      : window.DEPOD_API_BASE || fallback
+  ).replace(/\/$/, "");
+  const API_URL = API_BASE + "/api/contact/";
 
   const qs = (sel) => document.querySelector(sel);
   const isStr = (v) => typeof v === "string" && v.trim().length > 0;
@@ -146,10 +154,11 @@
     if (window.API && typeof API._url === "function") {
       return API._url("/api/contact-messages/");
     }
-    const base = (window.DEPOD_API_BASE || "http://127.0.0.1:8000").replace(
-      /\/$/,
-      ""
-    );
+    const deployed = "https://depod-api.onrender.com";
+    const isLocal =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const fallback = isLocal ? "http://127.0.0.1:8000" : deployed;
+    const base = (window.DEPOD_API_BASE || fallback).replace(/\/$/, "");
     return base + "/api/contact-messages/";
   }
 
