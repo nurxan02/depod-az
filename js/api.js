@@ -3,7 +3,7 @@
 //   API.setBase('https://api.yourdomain.com');
 (function () {
   // Default deployed backend origin
-  const DEPLOYED_API_BASE = "https://depod-api.onrenader.com";
+  const DEPLOYED_API_BASE = "https://depod-api.onrender.com";
   // Determine base once and reuse everywhere with safer defaults
   function readMetaBase() {
     const el = document.querySelector('meta[name="depod-api-base"]');
