@@ -7,6 +7,7 @@
     const el = document.querySelector('meta[name="depod-api-base"]');
     return el && el.content ? el.content.trim() : "";
   }
+  
 
   function isLocalhostHost(h) {
     return h === "localhost" || h === "127.0.0.1";
