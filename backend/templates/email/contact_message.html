@@ -1,0 +1,19 @@
+{% extends "email/base_email.html" %} {% block content %}
+<h1>Yeni Əlaqə Mesajı</h1>
+<p>Aşağıda detalları görə bilərsiniz:</p>
+<dl class="meta">
+  <dt>Müştəri</dt>
+  <dd>{{ msg.first_name }} {{ msg.last_name }}</dd>
+  <dt>E‑poçt</dt>
+  <dd>{{ msg.email }}</dd>
+  <dt>Telefon</dt>
+  <dd>{{ msg.phone|default:"-" }}</dd>
+  <dt>Mövzu</dt>
+  <dd>{{ msg.subject_display }}</dd>
+  <dt>Mesaj</dt>
+  <dd>{{ msg.message|linebreaksbr }}</dd>
+  <dt>Tarix</dt>
+  <dd>{{ msg.created_at }}</dd>
+</dl>
+<p><a href="{{ admin_url }}" target="_blank">Admin paneldə aç</a></p>
+{% endblock %}

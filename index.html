@@ -1,521 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Depod - Gun Cleaning Accessories</title>
-    <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon" />
-    <!-- Bootstrap 5 CSS -->
+    <title>Depod - Keyfiyyətli Texnologiya Məhsulları</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Depod - Powerbank, qulaqlıq və avtomobil şarj cihazları kimi keyfiyyətli texnologiya məhsulları"
+    />
+    <meta
+      name="keywords"
+      content="powerbank, qulaqlıq, avtomobil şarj cihazı, depod, azerbaycan"
+    />
+    <meta name="author" content="Depod" />
+
+    <!-- API Base Configuration -->
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Depod" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="favicon/favicon.svg"
+    />
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- FontAwesome -->
+    <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
     />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <!-- Navigation -->
-    <div id="header-placeholder"></div>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <img src="image/logo.png" alt="Depod Logo" class="logo-icon" />
+          <span class="logo-text" translate="no">DEPOD</span>
+        </a>
 
-    <!-- Hero Carousel -->
-    <div
-      id="heroCarousel"
-      class="carousel slide"
-      data-bs-ride="carousel"
-      data-bs-interval="8000"
-    >
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="3"
-          aria-label="Slide 4"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="4"
-          aria-label="Slide 5"
-        ></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="8000">
-          <img
-            src="images/carousel/slide1.jpg"
-            class="d-block w-100"
-            alt="Professional Gun Cleaning"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Professional Gun Cleaning Kits</h5>
-            <p>High-quality accessories for maintaining your firearms.</p>
-            <a href="products.html" class="btn btn-primary">View Products</a>
-          </div>
+        <div class="nav-menu" id="nav-menu">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link active">Ana Səhifə</a>
+            </li>
+            <li class="nav-item">
+              <a href="products.html" class="nav-link">Məhsullar</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">Haqqımızda</a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">Əlaqə</a>
+            </li>
+          </ul>
         </div>
-        <div class="carousel-item" data-bs-interval="8000">
-          <img
-            src="images/carousel/slide2.jpg"
-            class="d-block w-100"
-            alt="Precision Tools"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Innovative Cleaning Solutions</h5>
-            <p>Efficient and durable tools for every caliber.</p>
-            <a href="products.html" class="btn btn-primary">View Products</a>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="8000">
-          <img
-            src="images/carousel/slide3.jpg"
-            class="d-block w-100"
-            alt="Quality Firearms Care"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Premium Maintenance Tools</h5>
-            <p>Trusted by professionals worldwide for superior results.</p>
-            <a href="products.html" class="btn btn-primary">View Products</a>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="8000">
-          <img
-            src="images/carousel/slide4.jpg"
-            class="d-block w-100"
-            alt="Complete Cleaning Systems"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Complete Cleaning Systems</h5>
-            <p>Everything you need for proper firearm maintenance.</p>
-            <a href="products.html" class="btn btn-primary">View Products</a>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="8000">
-          <img
-            src="images/carousel/slide5.jpg"
-            class="d-block w-100"
-            alt="Expert Gun Care"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Expert Gun Care Products</h5>
-            <p>Precision engineered for optimal performance and longevity.</p>
-            <a href="products.html" class="btn btn-primary">View Products</a>
-          </div>
+
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+    </nav>
 
-    <!-- Featured Products Section -->
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="fw-bold">Featured Products</h2>
-          <p class="text-muted">Explore our top-rated cleaning accessories</p>
-        </div>
-        <div class="row g-4">
-          <!-- Product 1 -->
-          <div class="col-md-4 col-lg-3">
-            <div class="card h-100 product-card">
-              <img
-                src="images/products/anti-rust-gun-cleaning-oil_747985.jpg"
-                class="card-img-top"
-                alt="Anti Rust Oil"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Anti Rust Gun Cleaning Oil</h5>
-                <p class="card-text text-muted">
-                  Premium protection against rust and corrosion.
-                </p>
-              </div>
-              <div class="card-footer bg-white border-top-0">
-                <a href="#" class="btn btn-outline-dark w-100">View Details</a>
-              </div>
-            </div>
-          </div>
-          <!-- Product 2 -->
-          <div class="col-md-4 col-lg-3">
-            <div class="card h-100 product-card">
-              <img
-                src="images/products/gun-cleaning-patch-catcher-for-collecting-residues_860344.jpg"
-                class="card-img-top"
-                alt="Patch Catcher"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Patch Catcher</h5>
-                <p class="card-text text-muted">
-                  Collects residues efficiently during cleaning.
-                </p>
-              </div>
-              <div class="card-footer bg-white border-top-0">
-                <a href="#" class="btn btn-outline-dark w-100">View Details</a>
-              </div>
-            </div>
-          </div>
-          <!-- Product 3 -->
-          <div class="col-md-4 col-lg-3">
-            <div class="card h-100 product-card">
-              <img
-                src="images/products/deluxe-wooden-case-universal-gun-cleaning-kit-with-gun-rest-544209.jpg"
-                class="card-img-top"
-                alt="Wooden Case Kit"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Deluxe Wooden Case Kit</h5>
-                <p class="card-text text-muted">
-                  Universal cleaning kit with gun rest.
-                </p>
-              </div>
-              <div class="card-footer bg-white border-top-0">
-                <a href="#" class="btn btn-outline-dark w-100">View Details</a>
-              </div>
-            </div>
-          </div>
-          <!-- Product 4 -->
-          <div class="col-md-4 col-lg-3">
-            <div class="card h-100 product-card">
-              <img
-                src="images/products/universal-gun-cleaning-kit-big-size-green-plastic-case_772203.jpg"
-                class="card-img-top"
-                alt="Universal Kit"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Universal Green Kit</h5>
-                <p class="card-text text-muted">
-                  Big size green plastic case for all calibers.
-                </p>
-              </div>
-              <div class="card-footer bg-white border-top-0">
-                <a href="#" class="btn btn-outline-dark w-100">View Details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center mt-5">
-          <a href="products.html" class="btn btn-primary btn-lg"
-            >View All Products</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Categories with Images -->
-    <section class="py-5">
-      <div class="container-fluid px-0">
-        <div class="row g-0">
-          <!-- Gun Cleaning Kit -->
-          <div class="col-lg-3 col-md-6">
-            <a href="gun-cleaning-kit.html" class="category-showcase-link">
-              <div class="category-showcase">
-                <img
-                  src="images/categories/gun-cleaning-kit.jpg"
-                  alt="Gun Cleaning Kit"
-                  class="category-showcase-img"
-                />
-                <div class="category-showcase-overlay">
-                  <div class="category-showcase-content">
-                    <h3>Gun Cleaning Kit</h3>
-                    <p>COMPLETE CLEANING KITS</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- Universal Gun Cleaning Kit -->
-          <div class="col-lg-3 col-md-6">
-            <a
-              href="universal-gun-cleaning-kit.html"
-              class="category-showcase-link"
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title" id="typewriter-title"></h1>
+          <p class="hero-subtitle">
+            Depod brendinin yenilikçi və etibarlı texnologiya həlləri ilə tanış
+            olun. Depod'lu olmaq bir seçim deyil, bir üstünlükdür...
+          </p>
+          <div class="hero-buttons">
+            <a href="#products" class="btn btn-primary btn-hero-primary"
+              >Məhsulları Kəşf Et</a
             >
-              <div class="category-showcase">
-                <img
-                  src="images/categories/universal-kit.jpg"
-                  alt="Universal Gun Cleaning Kit"
-                  class="category-showcase-img"
-                />
-                <div class="category-showcase-overlay">
-                  <div class="category-showcase-content">
-                    <h3>Universal Gun Cleaning Kit</h3>
-                    <p>UNIVERSAL GUN CLEANING KIT</p>
-                  </div>
-                </div>
-              </div>
-            </a>
+            <a href="about.html" class="btn btn-secondary">Haqqımızda</a>
           </div>
-          <!-- Gun Cleaning Bore Snake Ropes -->
-          <div class="col-lg-3 col-md-6">
-            <a href="bore-snake-ropes.html" class="category-showcase-link">
-              <div class="category-showcase">
-                <img
-                  src="images/categories/bore-snake.jpg"
-                  alt="Gun Cleaning Bore Snake Ropes"
-                  class="category-showcase-img"
-                />
-                <div class="category-showcase-overlay">
-                  <div class="category-showcase-content">
-                    <h3>Gun Cleaning Bore Snake Ropes</h3>
-                    <p>CLEANING BORE SNAKE ROPES</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- Magazine Speed Loader -->
-          <div class="col-lg-3 col-md-6">
-            <a href="magazine-speed-loader.html" class="category-showcase-link">
-              <div class="category-showcase">
-                <img
-                  src="images/categories/magazine-loader.jpg"
-                  alt="Magazine Speed Loader"
-                  class="category-showcase-img"
-                />
-                <div class="category-showcase-overlay">
-                  <div class="category-showcase-content">
-                    <h3>Magazine Speed Loader</h3>
-                    <p>MAGAZINE SPEED LOADER</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
+        </div>
+        <div class="hero-image">
+          <img
+            id="hero-slider-img"
+            src="image/material/earphone/png/peak-black.png"
+            alt="Depod Peak Qulaqlıq"
+            class="hero-product"
+            style="
+              transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.7s;
+            "
+          />
         </div>
       </div>
     </section>
 
-    <!-- Product Categories Section -->
-    <section class="py-5 bg-light">
+    <!-- Products Section -->
+    <section id="products" class="products">
       <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="fw-bold">Product Categories</h2>
-          <p class="text-muted">
-            Browse our complete range of gun care products
+        <div class="section-header">
+          <h2 class="section-title">Məhsul Kateqoriyaları</h2>
+          <p class="section-subtitle">
+            Hər ehtiyacınız üçün mükəmməl texnoloji həllər
           </p>
         </div>
-        <div class="row g-4">
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Gun+Cleaning"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-tools fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Gun Cleaning</h5>
-                <p class="text-muted small">
-                  Complete cleaning kits and accessories
-                </p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Gunsmith"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-wrench fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Gunsmith</h5>
-                <p class="text-muted small">Professional gunsmith tools</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Hunting+and+Shooting"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-crosshairs fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Hunting & Shooting</h5>
-                <p class="text-muted small">Essential hunting accessories</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Cleaning+Brush"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-brush fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Cleaning Brushes</h5>
-                <p class="text-muted small">Specialized bore brushes</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Gun+Oil"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-tint fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Gun Oil</h5>
-                <p class="text-muted small">Premium lubricants and oils</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Tactical+Gear"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-shield-alt fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Tactical Gear</h5>
-                <p class="text-muted small">Professional tactical equipment</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a
-              href="products.html?category=Flexible+Honing"
-              class="text-decoration-none"
-            >
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-cog fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">Flexible Honing</h5>
-                <p class="text-muted small">Bore honing tools</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <a href="products.html" class="text-decoration-none">
-              <div class="card h-100 category-card text-center p-4">
-                <div class="category-icon mb-3">
-                  <i class="fas fa-th fa-3x text-primary"></i>
-                </div>
-                <h5 class="fw-bold">View All</h5>
-                <p class="text-muted small">Browse all products</p>
-              </div>
-            </a>
-          </div>
-        </div>
+
+        <div class="category-cards-grid" id="categoryGrid"></div>
       </div>
     </section>
 
-    <!-- About Us Section -->
-    <section class="py-5">
+    <!-- Features Section -->
+    <section class="features">
       <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            <img
-              src="images/carousel/slide2.jpg"
-              class="img-fluid rounded shadow"
-              alt="About Depod"
-            />
-          </div>
-          <div class="col-lg-6 mt-4 mt-lg-0">
-            <h2 class="fw-bold mb-4">About Depod</h2>
-            <p class="lead">
-              Professional Manufacturer of Gun Cleaning Accessories.
-            </p>
-            <p>
-              Established with a passion for firearms maintenance, Depod is
-              dedicated to developing high-quality cleaning kits and tools. We
-              specialize in OEM/ODM orders for gun cleaning kits, brushes, and
-              maintenance tools. Our professional technical team ensures every
-              product meets the highest standards of quality and durability.
-            </p>
-            <a href="about.html" class="btn btn-outline-primary mt-3"
-              >Read More</a
-            >
-          </div>
+        <div class="section-header">
+          <h2 class="section-title">Niyə Depod-dan almalısan?</h2>
+          <h2 class="section-subtitle">çünki....</h2>
         </div>
-      </div>
-    </section>
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Keyfiyyətə Zəmanət</h3>
+              <p class="feature-description">
+                Bütün məhsullarımız yüksək keyfiyyət standartlarına uyğundur
+              </p>
+            </div>
+          </div>
 
-    <!-- Why Choose Us Section -->
-    <section class="py-5 bg-dark why-choose-section text-white">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="fw-bold">Why Choose Us?</h2>
-        </div>
-        <div class="row text-center g-4">
-          <div class="col-md-4 stats-item">
-            <div class="card p-4 h-100">
-              <i class="fas fa-industry fa-3x text-primary mb-3"></i>
-              <h4>Company Strength</h4>
-              <p>
-                Years of experience in deep development of gun cleaning products
-                with a professional technical team.
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Yenilikçi Texnologiya</h3>
+              <p class="feature-description">
+                Ən son texnoloji innovasiyalar əsasında hazırlanmış məhsullar
               </p>
             </div>
           </div>
-          <div class="col-md-4 stats-item">
-            <div class="card p-4 h-100">
-              <i class="fas fa-globe fa-3x text-primary mb-3"></i>
-              <h4>Worldwide Sales</h4>
-              <p>
-                Our products are trusted by customers in North America, Europe,
-                Australia, and beyond.
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Müştəri Məmnuniyyəti</h3>
+              <p class="feature-description">
+                Müştəri məmnuniyyəti bizim əsas prioritetimizdir
               </p>
             </div>
           </div>
-          <div class="col-md-4 stats-item">
-            <div class="card p-4 h-100">
-              <i class="fas fa-headset fa-3x text-primary mb-3"></i>
-              <h4>Our Service</h4>
-              <p>
-                Dedicated support from production to completion, ensuring smooth
-                communication and satisfaction.
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Uzunmüddətli İstifadə</h3>
+              <p class="feature-description">
+                Məhsullarımız uzunmüddətli istifadə üçün nəzərdə tutulmuşdur
               </p>
             </div>
           </div>
@@ -524,12 +193,91 @@
     </section>
 
     <!-- Footer -->
-    <div id="footer-placeholder"></div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="js/components.js"></script>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="image/logo.png"
+                alt="Depod Logo"
+                class="footer-logo-icon"
+              />
+              <span class="footer-logo-text" translate="no">DEPOD</span>
+            </div>
+            <p class="footer-description">
+              Keyfiyyətli texnoloji məhsullar istehsalçısı. Yenilikçi həllər və
+              etibarlı məhsullarla sizin xidmətinizdəyik.
+            </p>
+            <div class="social-icons">
+              <a
+                href="https://instagram.com/depod"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://www.tiktok.com/@depod"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-tiktok"></i>
+              </a>
+              <a
+                href="https://facebook.com/depod"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Məhsullar</h4>
+            <ul class="footer-links">
+              <li><a href="products.html?category=powerbank">Powerbank</a></li>
+              <li><a href="products.html?category=earphone">Qulaqlıqlar</a></li>
+              <li>
+                <a href="products.html?category=car-charger">Avtomobil Şarjı</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Şirkət</h4>
+            <ul class="footer-links">
+              <li><a href="about.html">Haqqımızda</a></li>
+              <li><a href="contact.html">Əlaqə</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Əlaqə</h4>
+            <div class="footer-contact">
+              <p>info@depod.az</p>
+              <p>+994 XX XXX XX XX </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Depod. Bütün hüquqlar qorunur.
+            <a href="https://nurkhanmasimzada.site">Developed by Masimzada</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/social-popup.js"></script>
   </body>
 </html>

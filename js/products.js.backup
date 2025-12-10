@@ -1,35 +1,13 @@
-// Localhost API base logging
-(function () {
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    console.log("API base is", localStorage.getItem("API_BASE"));
-  }
-})();
-
-// Global category name map (key -> display name), filled from API when available
-window.CATEGORY_NAME_MAP = window.CATEGORY_NAME_MAP || null;
-
-// Prefetch categories early to ensure name lookups work on all pages
-(async function prefetchCategoriesForNames() {
-  if (!window.API) return;
-  try {
-    const cats = await window.API.listCategories();
-    window.CATEGORY_NAME_MAP = Object.fromEntries(
-      cats.map((c) => [c.key, c.name])
-    );
-  } catch (e) {
-    // ignore; will fallback to static map below
-  }
-})();
-
-// Product Database (local fallback)
+// Product Database
 const PRODUCTS = {
   "peak-black": {
     id: "peak-black",
     name: "Peak Black",
     category: "earphone",
-    // price: 89.99,
-    // originalPrice: 119.99,
-    // discount: 25,
+    price: 89.99,
+    originalPrice: 119.99,
+    discount: 25,
+    images: {
     images: {
       main: "image/material/earphone/png/peak-black.png",
       gallery: [
@@ -59,7 +37,7 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "24h", text: "Batareya" },
-      { number: "IPX4", text: "Suya Davamlı" },
+      { number: "IPX4", text: "Su Davamlı" },
       { number: "5.0", text: "Bluetooth" },
     ],
   },
@@ -67,9 +45,9 @@ const PRODUCTS = {
     id: "peak-beige",
     name: "Peak Beige",
     category: "earphone",
-    // price: 94.99,
-    // originalPrice: 129.99,
-    // discount: 27,
+    price: 94.99,
+    originalPrice: 129.99,
+    discount: 27,
     images: {
       main: "image/material/earphone/png/peak-beige.png",
       gallery: [
@@ -99,17 +77,17 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "28h", text: "Batareya" },
-      { number: "IPX5", text: "Suya Davamlı" },
-      { number: "ANC", text: "Noise Cancelation" },
+      { number: "IPX5", text: "Su Davamlı" },
+      { number: "ANC", text: "Noise Cancel" },
     ],
   },
   "tws-001-white": {
     id: "tws-001-white",
     name: "TWS-001 White",
     category: "earphone",
-    // price: 69.99,
-    // originalPrice: 89.99,
-    // discount: 22,
+    price: 69.99,
+    originalPrice: 89.99,
+    discount: 22,
     images: {
       main: "image/material/earphone/TWS-001-white.jpg",
       gallery: [
@@ -139,7 +117,7 @@ const PRODUCTS = {
     },
     highlights: [
       { number: "20h", text: "Batareya" },
-      { number: "IPX4", text: "Suya Davamlı" },
+      { number: "IPX4", text: "Su Davamlı" },
       { number: "48g", text: "Yüngül" },
     ],
   },
@@ -147,9 +125,11 @@ const PRODUCTS = {
     id: "powerpack-15w",
     name: "PowerPack 15W",
     category: "powerbank",
-    // price: 49.99,
-    // originalPrice: 69.99,
-    // discount: 29,
+    price: 49.99,
+    originalPrice: 69.99,
+    discount: 29,
+    rating: 4.6,
+    reviews: 73,
     images: {
       main: "image/material/earphone/powerpack-15w-white-perspective.jpg",
       gallery: [
@@ -182,52 +162,15 @@ const PRODUCTS = {
       { number: "3", text: "Port" },
     ],
   },
-  "charger-20w": {
-    id: "charger-20w",
-    name: "Charger 20W",
-    category: "charger",
-    // price: 24.99,
-    // originalPrice: 34.99,
-    // discount: 29,
-    images: {
-      main: "image/material/earphone/charger-20w.jpg",
-      gallery: [
-        "image/material/earphone/charger-20w.jpg",
-        "image/material/earphone/charger-20w-back.jpg",
-        "image/material/earphone/charger-20w-cable.jpg",
-      ],
-    },
-    description: "Səyahət zamanı etibarlı enerji həlli Charger 20W",
-    features: [
-      "20W maksimum güc",
-      "USB Type-C port",
-      "Universal uyğunluq",
-      "Orijinal dizayn",
-      "Qorunma sistemi",
-      "Kompakt dizayn",
-    ],
-    specs: {
-      "Max Güc": "20W",
-      Giriş: "12V-24V DC",
-      Çıxış: "5V/3A, 9V/2A, 12V/1.25A",
-      "Port Sayı": "1 USB-C",
-      Protokollar: "QC3.0, PD",
-      Çəki: "45g",
-      Ölçülər: "65 x 32 x 32mm",
-    },
-    highlights: [
-      { number: "20W", text: "Max Güc" },
-      { number: "1", text: "USB-C Port" },
-      { number: "12-24V", text: "Uyğunluq" },
-    ],
-  },
   "car-charger-15w": {
     id: "car-charger-15w",
     name: "Car Charger 15W",
     category: "car-charger",
-    // price: 24.99,
-    // originalPrice: 34.99,
-    // discount: 29,
+    price: 24.99,
+    originalPrice: 34.99,
+    discount: 29,
+    rating: 4.4,
+    reviews: 29,
     images: {
       main: "image/material/earphone/car-15w.jpg",
       gallery: [
@@ -261,65 +204,22 @@ const PRODUCTS = {
   },
 };
 
-// Map API product to frontend shape
-function mapApiProduct(p) {
-  return {
-    id: p.id,
-    name: p.name,
-    category: p.category,
-    images: {
-      main:
-        p.main_image ||
-        (p.images && p.images.find((i) => i.is_main)?.image) ||
-        "",
-      gallery: Array.isArray(p.images) ? p.images.map((i) => i.image) : [],
-    },
-    description: p.description || "",
-    features: Array.isArray(p.features) ? p.features.map((f) => f.text) : [],
-    specs: Array.isArray(p.specs)
-      ? p.specs.reduce((acc, s) => {
-          acc[s.label] = s.value;
-          return acc;
-        }, {})
-      : {},
-    highlights: Array.isArray(p.highlights)
-      ? p.highlights.map((h) => ({ number: h.number, text: h.text }))
-      : [],
-  };
-}
-
-// Get all products (prefers API)
-async function getAllProducts() {
-  try {
-    const list = await window.API.listProducts();
-    return list.map(mapApiProduct);
-  } catch (e) {
-    console.warn("API listProducts failed, using local data:", e.message);
-    return Object.values(PRODUCTS);
-  }
+// Get all products
+function getAllProducts() {
+  return Object.values(PRODUCTS);
 }
 
 // Get products by category
-async function getProductsByCategory(category) {
+function getProductsByCategory(category) {
   if (category === "all") return getAllProducts();
-  try {
-    const list = await window.API.listProducts(category);
-    return list.map(mapApiProduct);
-  } catch (e) {
-    return Object.values(PRODUCTS).filter(
-      (product) => product.category === category
-    );
-  }
+  return Object.values(PRODUCTS).filter(
+    (product) => product.category === category
+  );
 }
 
 // Get single product by ID
-async function getProductById(id) {
-  try {
-    const p = await window.API.getProduct(id);
-    return mapApiProduct(p);
-  } catch (e) {
-    return PRODUCTS[id];
-  }
+function getProductById(id) {
+  return PRODUCTS[id];
 }
 
 // Render products grid
@@ -331,7 +231,11 @@ function renderProducts(products) {
     .map(
       (product) => `
         <div class="product-card-modern" data-category="${product.category}">
-            
+            ${
+              product.discount > 0
+                ? `<div class="discount-badge">${product.discount}% OFF</div>`
+                : ""
+            }
             <div class="product-image-container">
                 <img src="${product.images.main}" alt="${
         product.name
@@ -346,12 +250,19 @@ function renderProducts(products) {
                 <div class="product-category">${getCategoryName(
                   product.category
                 )}</div>
-                 <h5 style="color: #757575ff;">Depod</h5><h3 class="product-name-modern">${
-                   product.name
-                 }</h3>
+                <h3 class="product-name-modern">${product.name}</h3>
+                <div class="product-rating">
+                    ${renderStars(product.rating)}
+                    <span class="rating-count">(${product.reviews})</span>
+                </div>
                 <p class="product-description-short">${product.description}</p>
                 <div class="product-price-container">
-
+                    <span class="current-price">$${product.price}</span>
+                    ${
+                      product.originalPrice
+                        ? `<span class="original-price">$${product.originalPrice}</span>`
+                        : ""
+                    }
                 </div>
                 <a href="product-detail.html?id=${
                   product.id
@@ -364,32 +275,37 @@ function renderProducts(products) {
 }
 
 // Render star rating
+function renderStars(rating) {
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+  let stars = "";
+
+  // Full stars
+  for (let i = 0; i < fullStars; i++) {
+    stars += "★";
+  }
+
+  // Half star
+  if (hasHalfStar) {
+    stars += "☆";
+  }
+
+  // Empty stars
+  for (let i = 0; i < emptyStars; i++) {
+    stars += "☆";
+  }
+
+  return `<span class="stars">${stars}</span>`;
+}
+
 // Get category display name
 function getCategoryName(category) {
-  // If object with name (defensive), prefer it
-  if (category && typeof category === "object") {
-    if (category.name) return category.name;
-    if (
-      category.key &&
-      window.CATEGORY_NAME_MAP &&
-      window.CATEGORY_NAME_MAP[category.key]
-    ) {
-      return window.CATEGORY_NAME_MAP[category.key];
-    }
-  }
-
-  // Prefer dynamic map loaded from API (covers new categories without code changes)
-  if (window.CATEGORY_NAME_MAP && typeof category === "string") {
-    const name = window.CATEGORY_NAME_MAP[category];
-    if (name) return name;
-  }
-
-  // Fallback to static mapping for known defaults
   const categoryNames = {
     earphone: "Qulaqlıqlar",
     powerbank: "Powerbank",
     "car-charger": "Avtomobil Aksesuarları",
-    charger: "Şarj Cihazı",
   };
   return categoryNames[category] || category;
 }
@@ -401,73 +317,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-async function initProductsPage() {
+function initProductsPage() {
   // Get category from URL parameter
   const urlParams = new URLSearchParams(window.location.search);
   const category = urlParams.get("category") || "all";
 
-  // Render dynamic filters from API categories (fallback to static map)
-  await renderFilters(category);
-
   // Load products
-  const products = await getProductsByCategory(category);
+  const products = getProductsByCategory(category);
   renderProducts(products);
 
-  // Wire filter clicks (buttons are created in renderFilters)
-}
-
-async function renderFilters(activeKey) {
-  const container = document.querySelector(".filter-tabs");
-  if (!container) return;
-
-  // Fetch categories from API
-  let categories = [];
-  try {
-    categories = await window.API.listCategories(); // expects [{id,key,name}]
-    // Update global map for consistent naming across pages
-    window.CATEGORY_NAME_MAP = Object.fromEntries(
-      categories.map((c) => [c.key, c.name])
-    );
-  } catch (e) {
-    // fallback to static mapping keys used in getCategoryName
-    categories = [
-      { key: "earphone", name: getCategoryName("earphone") },
-      { key: "powerbank", name: getCategoryName("powerbank") },
-      { key: "charger", name: getCategoryName("charger") },
-      { key: "car-charger", name: getCategoryName("car-charger") },
-    ];
-  }
-
-  // Build buttons: All + categories
-  const html = [
-    `<button class="filter-btn ${
-      activeKey === "all" ? "active" : ""
-    }" data-category="all">Hamısı</button>`,
-    ...categories.map(
-      (c) => `
-      <button class="filter-btn ${
-        activeKey === c.key ? "active" : ""
-      }" data-category="${c.key}">
-        ${c.name}
-      </button>
-    `
-    ),
-  ].join("\n");
-
-  container.innerHTML = html;
-
-  // Add click handlers
-  const filterBtns = container.querySelectorAll(".filter-btn");
+  // Set active filter
+  const filterBtns = document.querySelectorAll(".filter-btn");
   filterBtns.forEach((btn) => {
-    btn.addEventListener("click", async () => {
+    btn.classList.remove("active");
+    if (btn.getAttribute("data-category") === category) {
+      btn.classList.add("active");
+    }
+  });
+
+  // Add filter event listeners
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
       const selectedCategory = btn.getAttribute("data-category");
 
-      // Update active states
+      // Update active filter
       filterBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
-      // Load and render
-      const filteredProducts = await getProductsByCategory(selectedCategory);
+      // Filter products
+      const filteredProducts = getProductsByCategory(selectedCategory);
       renderProducts(filteredProducts);
 
       // Update URL
