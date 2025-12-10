@@ -1,35 +1,92 @@
-# Depod (Static Frontend + Django Backend)
+# Depod - Gun Cleaning Accessories Website
 
-This repo contains a static frontend (GitHub Pages friendly) and a Django REST backend under `backend/` to manage content via Django Admin and serve JSON/media.
+Modern, responsive static website for Depod, a professional manufacturer of gun cleaning accessories.
 
-## Frontend (static)
+## 🎨 Design Features
 
-- Pages: `index.html`, `products.html`, `product-detail.html`, etc.
-- Product data is fetched from a backend API if `API_BASE` is configured; otherwise it falls back to the local hardcoded list in `js/products.js`.
-- Configure API at runtime in your browser console:
+- **Color Scheme**: 40% White, 20% Black, 20% Blue (#1e88e5), 20% Dark Blue (#0d47a1)
+- **Responsive Design**: Fully responsive across all devices
+- **Modern UI**: Clean, minimal design with smooth animations
+- **Glassmorphism**: Blurred navbar effect on scroll
+- **Performance Optimized**: Lightweight and fast loading
 
-```js
-// Optional: override API base (auto-uses https://depod-api.onrender.com in prod)
-API.setBase("https://depod-api.onrender.com");
+## 🚀 Technologies Used
+
+- HTML5
+- CSS3 (Custom Variables, Animations, Flexbox, Grid)
+- JavaScript (ES6+)
+- Bootstrap 5
+- Font Awesome Icons
+- Google Fonts (Roboto)
+
+## 📁 Project Structure
+
+```
+gun-proc/
+├── index.html          # Home page with carousel
+├── about.html          # About us page
+├── products.html       # Products listing with filtering
+├── contact.html        # Contact page with form
+├── inquiry.html        # Quote request form
+├── css/
+│   └── style.css       # Main stylesheet
+├── js/
+│   ├── components.js   # Reusable header/footer components
+│   ├── products.js     # Product filtering and pagination
+│   └── main.js         # Additional scripts
+└── images/
+    ├── logo/           # Logo files (SVG)
+    ├── carousel/       # Homepage carousel images
+    ├── products/       # Product images
+    └── favicon/        # Favicon files
 ```
 
-The setting persists in `localStorage`.
+## ✨ Features
 
-## Backend (Django + DRF + PostgreSQL)
+### Header & Footer Components
 
-See `backend/README.md` for setup.
+- Dynamic header/footer loaded via JavaScript
+- Logo changes color based on background (black on light, white on dark)
+- Sticky navigation with blur effect on scroll
 
-Essential endpoints:
+### Products Page
 
-- GET `/api/products/?category=earphone|powerbank|charger|car-charger`
-- GET `/api/products/<id>/`
-- GET `/api/categories/`
+- 13 products across 7 categories
+- Search functionality
+- Category filtering
+- Working pagination (9 products per page)
+- Smooth animations
 
-Media files are returned as absolute URLs, so the static site can render images hosted by the backend.
+### Contact Information
 
-## Deployment model
+- Phone: +86 19584441761
+- Email: 2776792683@qq.com
+- Address: No.503, Guangboguomao, Ningbo, China
 
-- Host this frontend on GitHub Pages (static)
-- Host the backend on a server/platform with a domain like `https://api.depod.az`
-- Set CORS to allow your Pages domain.
-- In production you can inline a small script to set `API_BASE` globally, or instruct admins to run `API.setBase('https://api.depod.az')` once per device.
+## 🌐 GitHub Pages Deployment
+
+1. Push to GitHub repository
+2. Go to Settings > Pages
+3. Select main branch as source
+4. Site will be live at: `https://[username].github.io/[repo-name]/`
+
+## 📱 Responsive Breakpoints
+
+- Mobile: < 768px
+- Tablet: 768px - 991px
+- Desktop: ≥ 992px
+
+## 🎯 Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## 📄 License
+
+© 2025 Depod. All Rights Reserved.
+
+## 📞 Contact
+
+For inquiries: 2776792683@qq.com

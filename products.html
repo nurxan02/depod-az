@@ -1,216 +1,92 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Məhsullar - Depod</title>
-
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Depod məhsulları - Powerbank, qulaqlıq və avtomobil şarj cihazları"
-    />
-    <meta
-      name="keywords"
-      content="depod məhsulları, powerbank, qulaqlıq, avtomobil şarj"
-    />
-
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#000000" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <title>Products - Depod</title>
+    <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon" />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="favicon/favicon-96x96.png"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
     />
-    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="favicon/site.webmanifest" />
-
-    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
-
-    <!-- FontAwesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-    />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-          <img src="image/logo.png" alt="Depod Logo" class="logo-icon" />
-          <span class="logo-text" translate="no">DEPOD</span>
-        </a>
+    <div id="header-placeholder"></div>
 
-        <div class="nav-menu" id="nav-menu">
-          <ul class="nav-list">
-            <li class="nav-item">
-              <a href="index.html" class="nav-link">Ana Səhifə</a>
-            </li>
-            <li class="nav-item">
-              <a href="products.html" class="nav-link active">Məhsullar</a>
-            </li>
-            <li class="nav-item">
-              <a href="about.html" class="nav-link">Haqqımızda</a>
-            </li>
-            <li class="nav-item">
-              <a href="contact.html" class="nav-link">Əlaqə</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="nav-toggle" id="nav-toggle">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Products Header -->
-    <section class="products-header">
+    <!-- Page Header -->
+    <header class="bg-secondary py-5 text-white text-center">
       <div class="container">
-        <div class="breadcrumb">
-          <a href="index.html">Ana Səhifə</a>
-          <span>/</span>
-          <span class="active">Məhsullar</span>
-        </div>
-        <h1 class="products-title">Məhsullarımız</h1>
-        <p class="products-subtitle">Keyfiyyətli texnoloji həllər</p>
+        <h1 class="display-4 fw-bold fade-in-up">Our Products</h1>
+        <p class="lead">Explore our wide range of gun cleaning accessories</p>
       </div>
-    </section>
+    </header>
 
-    <!-- Filter Section -->
-    <section class="filter-section">
+    <!-- Main Content -->
+    <section class="py-5">
       <div class="container">
-        <div class="filter-tabs">
-          <button class="filter-btn active" data-category="all">Hamısı</button>
-          <button class="filter-btn" data-category="earphone">
-            Qulaqlıqlar
-          </button>
-          <button class="filter-btn" data-category="powerbank">
-            Powerbank
-          </button>
-          <button class="filter-btn" data-category="charger">
-            Şarj Cihazları
-          </button>
-          <button class="filter-btn" data-category="car-charger">
-            Avtomobil Şarjı
-          </button>
+        <!-- Search Bar -->
+        <div class="row mb-4">
+          <div class="col-md-8 mx-auto">
+            <div class="search-box">
+              <input
+                type="text"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search products..."
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Products Grid -->
-    <section class="products-listing">
-      <div class="container">
-        <div class="products-grid" id="productsGrid">
-          <!-- Products will be loaded dynamically -->
+        <div class="row">
+          <!-- Sidebar -->
+          <div class="col-lg-3 mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                  <i class="fas fa-filter me-2"></i>Categories
+                </h5>
+              </div>
+              <div class="list-group list-group-flush" id="categoriesContainer">
+                <!-- Categories will be loaded by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="col-lg-9">
+            <div class="row g-4" id="productsContainer">
+              <!-- Products will be loaded by JS -->
+            </div>
+
+            <!-- Pagination -->
+            <nav
+              aria-label="Page navigation"
+              class="mt-5"
+              id="paginationContainer"
+            >
+              <!-- Pagination will be loaded by JS -->
+            </nav>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <div class="footer-logo">
-              <img
-                src="image/logo.png"
-                alt="Depod Logo"
-                class="footer-logo-icon"
-              />
-              <span class="footer-logo-text" translate="no">DEPOD</span>
-            </div>
-            <p class="footer-description">
-              Keyfiyyətli texnoloji məhsullar istehsalçısı. Yenilikçi həllər və
-              etibarlı məhsullarla sizin xidmətinizdəyik.
-            </p>
-            <div class="social-icons">
-              <a
-                href="https://instagram.com/depod"
-                target="_blank"
-                rel="noopener"
-              >
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a
-                href="https://www.tiktok.com/@depod"
-                target="_blank"
-                rel="noopener"
-              >
-                <i class="fab fa-tiktok"></i>
-              </a>
-              <a
-                href="https://facebook.com/depod"
-                target="_blank"
-                rel="noopener"
-              >
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </div>
-          </div>
+    <div id="footer-placeholder"></div>
 
-          <div class="footer-section">
-            <h4 class="footer-title">Məhsullar</h4>
-            <ul class="footer-links">
-              <li><a href="products.html?category=powerbank">Powerbank</a></li>
-              <li><a href="products.html?category=earphone">Qulaqlıqlar</a></li>
-              <li>
-                <a href="products.html?category=car-charger">Avtomobil Şarjı</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4 class="footer-title">Şirkət</h4>
-            <ul class="footer-links">
-              <li><a href="about.html">Haqqımızda</a></li>
-              <li><a href="contact.html">Əlaqə</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4 class="footer-title">Əlaqə</h4>
-            <div class="footer-contact">
-              <p>info@depod.az</p>
-              <p>+994 XX XXX XX XX</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          <p>
-            &copy; 2025 Depod. Bütün hüquqlar qorunur.
-            <a href="https://nurkhanmasimzada.site">Developed by Masimzada</a>
-          </p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="js/api.js"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/components.js"></script>
     <script src="js/products.js"></script>
-    <script src="js/footer.js"></script>
   </body>
 </html>
